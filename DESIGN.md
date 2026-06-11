@@ -140,3 +140,13 @@ We enforce the BEVAMPED 70/20/10 rule adapted for THRESHOLD:
 - **Contrast Ratios:** Minimum 4.5:1 for body copy. High contrast bone-gray on obsidian black ensures > 10:1.
 - **Prefers-Reduced-Motion:** Check media query `@media (prefers-reduced-motion: reduce)` to disable vertical sliding entry, scale wipe transitions, and cursor shadow masks.
 - **Alt Text:** Every image layer must have descriptive, literal alternative text (e.g. `alt="A vertical board-formed concrete column with deep cracks, illuminated by side studio lighting"`).
+
+---
+
+## 6. The Spatial Narrative (3-Act Structure)
+
+The structural architecture of the website is built sequentially to guide the user from philosophy to architecture, and finally to tactile materials.
+
+* **Act I: The Threshold (Hero Event).** A pinned, immersive video background introducing the spatial philosophy. The scrolling reveals three punchline text blocks ("The noise stays outside" -> "We do not decorate" -> "Every room is a threshold").
+* **Act II: The Descent (Vertical Rooms).** 6 vertically scrolling, massive architectural room videos. Each takes up 100svh. They are: 01 / THE MONOLITH, 02 / THE SANCTUARY, 03 / THE VAULT, 04 / THE CORRIDOR, 05 / THE STUDY, 06 / THE ARCHIVE.
+* **Act III: The Vault (Horizontal Fisheye Gallery).** A horizontal scrolling 3D fisheye gallery displaying 6 macro closeups of raw luxury materials (Calacatta Viola, Smoked Oak, Brushed Brass, Travertine, Nero Marquina, Linen Textures).

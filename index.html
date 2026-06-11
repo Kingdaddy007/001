@@ -6,59 +6,252 @@
     <!-- High-end typography. Using 'Inter' for clean, premium spatial aesthetic -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
-    <title>The Sanctuary Return</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Cormorant+Garamond:wght@600;700&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
+    <title>The Sanctuary Master Sequence</title>
+    <script>
+      if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        document.documentElement.classList.add('motion-ok');
+      }
+    </script>
   </head>
   <body>
+    <div id="master-bg-video-container">
+      <video id="master-bg-video-active" class="bg-video active" muted playsinline preload="auto" src="/Camera_push_into_room_202606091451.mp4" autoplay loop></video>
+      <video id="master-bg-video-next" class="bg-video" muted playsinline preload="auto"></video>
+      <div class="master-bg-overlay"></div>
+    </div>
+    <div class="film-grain"></div>
+
+    <!-- Hidden SVG for Advanced Filters & Masks -->
+    <svg width="0" height="0" style="position: absolute; pointer-events: none;" aria-hidden="true">
+      <defs>
+        <filter id="fractional-blur" color-interpolation-filters="sRGB">
+          <!-- The stdDeviation is animated dynamically via GSAP -->
+          <feGaussianBlur id="silence-blur" stdDeviation="12" result="blur" />
+        </filter>
+        <mask id="blinds-mask" maskUnits="objectBoundingBox" maskContentUnits="objectBoundingBox">
+          <g id="blinds-group"></g>
+        </mask>
+      </defs>
+    </svg>
+
+    <!-- Fixed Viewport Framing -->
+    <header class="viewport-header">
+      <div class="brand">VOID / FORM</div>
+      <nav class="nav-links">
+        <a href="#">STUDIO</a>
+        <a href="#">PORTFOLIO</a>
+        <a href="#">JOURNAL</a>
+      </nav>
+    </header>
+
+    <footer class="viewport-footer">
+      <div class="audio-control" tabindex="0" aria-label="Toggle sound">
+        <span class="audio-label">SOUND</span>
+        <div class="audio-equalizer">
+          <span class="eq-bar bar-1"></span>
+          <span class="eq-bar bar-2"></span>
+          <span class="eq-bar bar-3"></span>
+          <span class="eq-bar bar-4"></span>
+        </div>
+      </div>
+      <div class="concierge-inquiry-capsule" tabindex="0">
+        <span>Request a consultation</span>
+        <svg class="capsule-arrow" viewBox="0 0 24 24" width="16" height="16">
+          <path d="M5 12h14M12 5l7 7-7 7" stroke="currentColor" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+    </footer>
+
     <main id="lenis-wrapper">
       
-      <!-- Spatial Hero Event -->
-      <section class="hero-container">
-        <!-- The Sanctuary Video (Scroll-Scrubbed) -->
-        <div class="sanctuary">
-          <video 
-            class="sanctuary-video"
-            src="/Camera_push_into_room_202606091453.mp4" 
-            poster="/Rectangle%20(5).png"
-            preload="auto"
-            autoplay loop muted playsinline>
-          </video>
-        </div>
-        
-        <!-- The Threshold Veil -->
-        <div class="threshold">
-          <h1 class="threshold-text">THE NOISE STAYS OUTSIDE.</h1>
-        </div>
+      <!-- ACT I: The Threshold & Underlay Scene Wrapper -->
+      <div class="pinned-scene-wrapper">
+        <!-- ACT I.5: The Narrative Bridge (Stationary Underlay, sits behind Hero) -->
+        <section class="narrative-bridge">
+          <div class="bridge-content" style="opacity: 0;">
+            <span class="bridge-number">02 / THE DESCENT</span>
+            <h2 class="bridge-headline">A sanctuary is not a sealed fortress.</h2>
+            <p class="bridge-body">It is a sequence of breathable thresholds.<br>To understand our architecture, one must move through the light we have filtered from the heat.</p>
+            <div class="bridge-scroll-indicator">Scroll to cross the thresholds &darr;</div>
+          </div>
+        </section>
 
-        <!-- The Punchlines (Apple-Style Text Masks) -->
-        <div class="punchline-container">
-          <div class="punchline-mask">
-            <h2 class="punchline-text">WE DO NOT DECORATE.</h2>
-          </div>
-          <div class="punchline-mask">
-            <h2 class="punchline-text">WE SCULPT VOLUME AND LIGHT.</h2>
-          </div>
-          <div class="punchline-mask">
-            <h2 class="punchline-text">EVERY ROOM IS A THRESHOLD.</h2>
+        <!-- ACT I Foreground Layer (gets masked by blinds) -->
+        <div class="act-i-foreground">
+          <!-- ACT I: The Hero (Slides up at the end to reveal bridge) -->
+          <section class="hero-container act-i">
+            <div class="sanctuary-ambient">
+              <video class="sanctuary-video" src="/Camera_push_into_room_202606091451.mp4" muted playsinline preload="auto" autoplay loop></video>
+            </div>
+
+            <div class="sanctuary">
+              <video class="sanctuary-video" src="/Camera_push_into_room_202606091451.mp4" muted playsinline preload="auto" autoplay loop></video>
+            </div>
+            
+            <div class="threshold">
+              <h1 class="threshold-text">THE NOISE STAYS OUTSIDE.</h1>
+            </div>
+
+            <div class="punchline-container staircase-layout">
+              <div class="punchline-text staircase-line line-1" style="--indent: 0;">
+                <span class="word-sans">we do not</span>
+              </div>
+              <div class="punchline-text staircase-line line-2" style="--indent: 1;">
+                <span class="word-serif-italic">decorate</span>
+                <div class="guide-line"></div>
+              </div>
+              <div class="punchline-text staircase-line line-3" style="--indent: 2;">
+                <span class="word-sans">we sculpt</span>
+              </div>
+              <div class="punchline-text staircase-line line-4" style="--indent: 3;">
+                <span class="word-serif-italic">volume</span>
+                <span class="word-sans">and</span>
+                <span class="word-serif-italic">light,</span>
+              </div>
+              <div class="punchline-text staircase-line line-5" style="--indent: 2;">
+                <span class="word-sans">making every room</span>
+              </div>
+              <div class="punchline-text staircase-line line-6" style="--indent: 1;">
+                <span class="word-sans">a</span>
+                <span class="word-serif-italic">threshold.</span>
+              </div>
+            </div>
+          </section>
+          
+          <div class="atelier-panel">
+            <h2 class="atelier-title">THE ARCHITECTURE OF AIR.</h2>
+            <div class="atelier-body">
+              <p>THRESHOLD is a tropical modernist design atelier. We build breathable residential sanctuaries for clients who seek absolute material honesty, fluid indoor-outdoor boundaries, and refuge from the equatorial sun.</p>
+              <p>We reject mid-market styling and artificial enclosures. We operate exclusively with native elements: slatted teak, warm laterite stone, expansive glass, and filtered cross-breezes.</p>
+            </div>
           </div>
         </div>
+      </div> <!-- End pinned-scene-wrapper -->
 
-        <!-- Quiet Spatial UI Pattern -->
-        <nav class="quiet-nav">
-          <div class="brand">THE SANCTUARY</div>
-          <div class="concierge-inquiry" tabindex="0">Request a consultation</div>
-        </nav>
+      <!-- ACT II: The Descent (6 Vertical Rooms) -->
+      <div class="act-ii-wrapper">
+        <!-- Room 1 -->
+        <section class="room-section act-ii">
+          <div class="room-video-container">
+          </div>
+          <div class="room-caption">
+            <h2 class="room-caption-title">THE PORTICO</h2>
+            <p class="room-caption-desc">Deep wooden overhangs casting precise, slatted shadows across sun-warmed laterite stone.</p>
+          </div>
+        </section>
+        <!-- Room 2 -->
+        <section class="room-section act-ii">
+          <div class="room-video-container">
+          </div>
+          <div class="room-caption">
+            <h2 class="room-caption-title">THE BATH</h2>
+            <p class="room-caption-desc">A limestone basin carved into a subterranean vault of rising steam.</p>
+          </div>
+        </section>
+        <!-- Room 3 -->
+        <section class="room-section act-ii">
+          <div class="room-video-container">
+          </div>
+          <div class="room-caption">
+            <h2 class="room-caption-title">THE WARDROBE</h2>
+            <p class="room-caption-desc">A sequence of illuminated glass and dark oak framing the ritual of dress.</p>
+          </div>
+        </section>
+        <!-- Room 4 -->
+        <section class="room-section act-ii">
+          <div class="room-video-container">
+          </div>
+          <div class="room-caption">
+            <h2 class="room-caption-title">THE TRANSIT</h2>
+            <p class="room-caption-desc">A polished corridor where shadow and light frame geometric studies of depth.</p>
+          </div>
+        </section>
+        <!-- Room 5 -->
+        <section class="room-section act-ii">
+          <div class="room-video-container">
+          </div>
+          <div class="room-caption">
+            <h2 class="room-caption-title">THE SALON</h2>
+            <p class="room-caption-desc">A sunken conversation space defined by sculptural seating and the quiet orchestration of natural light.</p>
+          </div>
+        </section>
+      </div>
+
+      <!-- ACT III: Hybrid Client Storytelling -->
+      <section id="storytelling-section" class="act-iii">
+        <div class="storytelling-pin-container">
+          
+          <!-- Part 1: Poetic Intro -->
+          <div class="storytelling-panel intro-panel active">
+            <div class="storytelling-content">
+              <span class="section-label">03 / THE POETRY OF SPACE</span>
+              <h2 class="story-headline">We do not build walls.<br>We capture the path of the sun.</h2>
+              <p class="story-body">
+                Every room we design is a study in quietness. We observe the breeze, 
+                we measure the shade, and we build a frame for life to unfold.
+              </p>
+            </div>
+          </div>
+
+          <!-- Part 2: Testimonial 1 -->
+          <div class="storytelling-panel testimonial-panel" data-testimonial="1">
+            <div class="storytelling-content testimonial-content">
+              <p class="testimonial-quote">
+                "Adebayo didn't just build us a house. He built a fortress of absolute silence where the equatorial heat turns into filtered breeze."
+              </p>
+              <div class="testimonial-meta">
+                <span class="testimonial-client">ALEXIS V.</span>
+                <span class="testimonial-location">THE LIMESTONE HOUSE</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Part 3: Testimonial 2 -->
+          <div class="storytelling-panel testimonial-panel" data-testimonial="2">
+            <div class="storytelling-content testimonial-content">
+              <p class="testimonial-quote">
+                "We reject the decoration of mid-market design. Here, the raw materials are the ornament—smoked oak, travertine, and shadow."
+              </p>
+              <div class="testimonial-meta">
+                <span class="testimonial-client">DIARA K.</span>
+                <span class="testimonial-location">THE SUBTERRANEAN SALON</span>
+              </div>
+            </div>
+          </div>
+
+        </div>
       </section>
 
-      <!-- Proof/Method Section (Stacked Card Transition) -->
-      <section class="method-section">
-        <div class="method-background">
-          <!-- Temporary placeholder: wait for user's new asset -->
-          <img src="/Rectangle%20(5).png" alt="Methodology Background">
-        </div>
-        <div class="method-content">
-          <h2 class="method-heading">METHODOLOGY & RIGOR</h2>
-          <p class="method-body">True architecture is not the addition of ornament, but the curation of silence.</p>
+      <!-- ACT IV: Outro / The Invitation -->
+      <section id="outro-section" class="act-iv">
+        <div class="outro-content">
+          <span class="section-label">04 / THE INVITATION</span>
+          <h2 class="outro-headline">Begin with a diagnostic.</h2>
+          <p class="outro-body">
+            We do not accept every commission. We work with clients who value 
+            absolute rest, raw materiality, and spatial silence. Let us evaluate your project.
+          </p>
+          
+          <div class="diagnostic-cta-wrapper">
+            <div class="concierge-inquiry-capsule large-cta" tabindex="0">
+              <span>Request a diagnostic audit</span>
+              <svg class="capsule-arrow" viewBox="0 0 24 24" width="20" height="20">
+                <path d="M5 12h14M12 5l7 7-7 7" stroke="currentColor" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+          </div>
+
+          <div class="outro-footer-metadata">
+            <div class="meta-item">
+              <span class="meta-label">LAGOS ATELIER</span>
+              <span class="meta-value">Victoria Island, Lagos</span>
+            </div>
+            <div class="meta-item">
+              <span class="meta-label">MILAN STUDIO</span>
+              <span class="meta-value">Via Montenapoleone, Milan</span>
+            </div>
+          </div>
         </div>
       </section>
       

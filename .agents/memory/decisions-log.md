@@ -1,9 +1,6 @@
-# Architectural Decisions Log
+# Master Architecture Decisions
 
-## 2026-06-09: The Sanctuary Return (Hero Section Pivot)
-- **Decision:** Abandoned the "Static Concrete Portal Mask" with Z-axis scroll push.
-- **Reasoning:** It felt like a gimmicky theater set, lacking the sophisticated atmospheric proof required for an ultra-luxury interior brand. It made Adebayo look like a carpenter rather than a spatial architect.
-- **New Direction:** "The Sanctuary Return" concept.
-- **Mechanics:** Pinned massive typography threshold ("THE NOISE STAYS OUTSIDE") that scales up on the Z-axis to reveal a Steadicam video glide into the golden living room.
-- **Asset Usage:** The user has provided an upscaled 1K video (`Camera_push_into_room_202606091453.mp4`). We will prioritize this high-res file to ensure absolute luxury quality.
-- **Video Strategy:** No drone shots. Grounded, slow, continuous push (dolly in) focusing on light interacting with textured stone, establishing absolute brand authority.
+- **Aesthetic Core:** Tropical Modernism. "A sanctuary is not a sealed fortress. It is a sequence of breathable thresholds."
+- **Typography:** Display fonts for titles, heavily tracked uppercase sans-serif for descriptions, formatted as tight, museum-style gallery labels in the bottom left to avoid obscuring immersive videos.
+- **Act II Structure:** A 6-room sequence (Portico, Bath, Wardrobe, Transit, Salon, Reserve) using full-screen looping `video` elements with `object-fit: cover` mapped to GSAP ScrollTriggers.
+- **Act III Structure:** Pinned Stop-Motion Material Index (6 swatches) replacing the horizontal fisheye slider. Swatch sizes are mapped to the native PNG aspect ratios to prevent clipping/stretching, and loading placeholders are handled dynamically in JS. Tag overlays are simplified into minimal museum captions.
