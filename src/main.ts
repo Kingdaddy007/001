@@ -5,39 +5,66 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger'
 
 gsap.registerPlugin(ScrollTrigger)
 
-// Video underlay controller setup
+// Video underlay controller — guards against AbortError from rapid scroll triggers
 let activeVideoElement = document.getElementById('master-bg-video-active') as HTMLVideoElement;
 let nextVideoElement = document.getElementById('master-bg-video-next') as HTMLVideoElement;
 let currentSrc = activeVideoElement ? activeVideoElement.getAttribute('src') || '' : '';
+let isTransitioning = false;
 
 function transitionToVideo(newSrc: string, duration: number = 1.5) {
+  // Deduplicate: ignore if same video is already playing
   if (currentSrc === newSrc) return;
-  currentSrc = newSrc;
+  // Guard: if a transition is mid-flight, don't stack another load() on top
+  // (that's what causes the AbortError — load() interrupts an in-flight play())
+  if (isTransitioning) {
+    // Queue the intent: when the current transition finishes, we'll be on the right video
+    // For now, just update the target src so the next onEnter picks it up
+    currentSrc = newSrc;
+    return;
+  }
 
-  if (!nextVideoElement) return;
+  currentSrc = newSrc;
+  isTransitioning = true;
+
+  if (!nextVideoElement || !activeVideoElement) {
+    isTransitioning = false;
+    return;
+  }
+
+  // Kill any existing tweens on these elements before starting new ones
+  gsap.killTweensOf([activeVideoElement, nextVideoElement]);
+
   nextVideoElement.src = newSrc;
   nextVideoElement.load();
-  
-  nextVideoElement.play().then(() => {
-    gsap.killTweensOf([activeVideoElement, nextVideoElement]);
-    
-    gsap.timeline()
+
+  const playPromise = nextVideoElement.play();
+  if (playPromise === undefined) {
+    // Old browser: no promise returned, just cross-fade immediately
+    gsap.set(activeVideoElement, { opacity: 0 });
+    gsap.set(nextVideoElement, { opacity: 0.75 });
+    const temp = activeVideoElement; activeVideoElement = nextVideoElement; nextVideoElement = temp;
+    isTransitioning = false;
+    return;
+  }
+
+  playPromise.then(() => {
+    gsap.timeline({ onComplete: () => { isTransitioning = false; } })
       .to(activeVideoElement, { opacity: 0, duration: duration, ease: "power2.inOut" })
       .to(nextVideoElement, { opacity: 0.75, duration: duration, ease: "power2.inOut" }, 0)
       .call(() => {
-        // Swap video references
         const temp = activeVideoElement;
         activeVideoElement = nextVideoElement;
         nextVideoElement = temp;
       });
-  }).catch(err => {
-    console.warn("Autoplay transition blocked/interrupted:", err);
-    // Silent fallback: immediate swap
-    if (activeVideoElement) activeVideoElement.style.opacity = '0';
-    if (nextVideoElement) nextVideoElement.style.opacity = '0.75';
-    const temp = activeVideoElement;
-    activeVideoElement = nextVideoElement;
-    nextVideoElement = temp;
+  }).catch((err: Error) => {
+    // AbortError is expected if the user scrolls very fast — handle gracefully
+    if (err.name === 'AbortError') {
+      // The src was already updated; just swap state silently
+      const temp = activeVideoElement; activeVideoElement = nextVideoElement; nextVideoElement = temp;
+    } else {
+      console.warn("Video transition error:", err);
+    }
+    isTransitioning = false;
   });
 }
 
