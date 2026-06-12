@@ -476,7 +476,7 @@ html.lenis { height: auto; }
 .room-video-container { 
   position: absolute; 
   /* Tighter inset so the cards are wider and gaps are smaller, while keeping bent edges visible */
-  inset: 1vh 1vw; 
+  inset: 1vh 3vw; 
   z-index: -1; /* Send it behind the text */
   overflow: clip; /* Essential for parallax cropping */
   border-radius: 40px; /* Bent edges / rounded corners! */

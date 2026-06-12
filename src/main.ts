@@ -465,9 +465,9 @@ mm.add("(prefers-reduced-motion: no-preference)", () => {
       if (roomVideoContainer && roomVideo) {
         // 1. The subtle "Cylinder" 3D tilt on the container itself
         gsap.fromTo(roomVideoContainer,
-          { rotationX: -15, scale: 1.05 }, 
+          { rotationX: -15, scale: 1 }, 
           {
-            rotationX: 15, scale: 1.05,
+            rotationX: 15, scale: 1,
             ease: "none",
             scrollTrigger: {
               trigger: room,
@@ -558,7 +558,7 @@ mm.add("(prefers-reduced-motion: no-preference)", () => {
 
   storyTl.to(".intro-panel", { autoAlpha: 0, y: -30, duration: 1.0, ease: "power2.in" })
     .to("[data-testimonial='1']", { autoAlpha: 1, y: 0, duration: 1.0, ease: "power2.out" }, "+=0.2");
-  storyTl.to('#master-bg-video-container', { scale: 1.05, duration: 2.0, ease: "power1.inOut" }, "-=2.0"); // Camera drift
+  storyTl.to('#master-bg-video-container', { scale: 1, duration: 2.0, ease: "power1.inOut" }, "-=2.0"); // Camera drift
   storyTl.to({}, { duration: 1.5 });
 
   storyTl.to("[data-testimonial='1']", { autoAlpha: 0, y: -30, duration: 1.0, ease: "power2.in" })
