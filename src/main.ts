@@ -151,13 +151,10 @@ const mm = gsap.matchMedia()
 
 // Act I Elements
 const heroContainer = document.querySelector('.hero-container') as HTMLElement
-const actIForeground = document.querySelector('.act-i-foreground') as HTMLElement
+const mainSection = document.querySelector('main') as HTMLElement
 const threshold = document.querySelector('.threshold') as HTMLElement
-const thresholdText = document.querySelector('.threshold-text') as HTMLElement
 const punchlines = gsap.utils.toArray('.punchline-text') as HTMLElement[]
-
-
-
+const actIForeground = document.querySelector('.act-i-foreground') as HTMLElement
 // fallow-ignore-next-line complexity
 mm.add("(prefers-reduced-motion: no-preference)", () => {
   
@@ -197,7 +194,7 @@ mm.add("(prefers-reduced-motion: no-preference)", () => {
   }
 
   // ==========================================
-  // LATERITE FOG REVEAL (Starts on Load)
+  // LATERITE FOG REVEAL ENTRANCE (Starts on Load)
   // ==========================================
   const arrivalTl = gsap.timeline({
     onComplete: () => {
@@ -206,12 +203,12 @@ mm.add("(prefers-reduced-motion: no-preference)", () => {
     }
   });
 
-  // The text starts with opacity: 0 from style.css
-  // Animate opacity, blur, displacement, and letter spacing together
-  arrivalTl.to('#arrival-brand', { opacity: 1, duration: 1.0, ease: "power2.inOut" }, 0.2)
-    .to('#arrival-blur', { attr: { stdDeviation: 0 }, duration: 2.5, ease: "power2.inOut" }, 0.5)
-    .to('#arrival-displacement', { attr: { scale: 0 }, duration: 2.5, ease: "power2.inOut" }, 0.5)
-    .to('#arrival-brand', { letterSpacing: "0.25em", duration: 3.5, ease: "power1.out" }, 0.5);
+  // Animate the fog reveal (No opacity fade! This fixes the scrolling reverse bug)
+  arrivalTl.fromTo('#arrival-brand', 
+    { letterSpacing: "0.1em" },
+    { letterSpacing: "0.25em", duration: 3.5, ease: "power1.out" }, 0.5
+  ).to('#arrival-blur', { attr: { stdDeviation: 0 }, duration: 2.5, ease: "power2.inOut" }, 0.5)
+   .to('#arrival-displacement', { attr: { scale: 0 }, duration: 2.5, ease: "power2.inOut" }, 0.5);
 
   // ==========================================
   // MASTER TIMELINE (Scroll-Triggered)
@@ -227,9 +224,14 @@ mm.add("(prefers-reduced-motion: no-preference)", () => {
     }
   });
 
-    // Open the Door
-    masterTl.to(thresholdText, { scale: 25, opacity: 0, ease: "power2.inOut", duration: 1.0 }, 0)
-      .to(threshold, { opacity: 0, ease: "power2.inOut", duration: 0.8 }, 0.2);
+    // Open the Door (Scale the SVG mask massively from the absolute center)
+    masterTl.to('#mask-scale-group', { 
+        scale: 120, 
+        transformOrigin: "50% 50%", 
+        ease: "power2.in", 
+        duration: 1.5 
+      }, 0)
+      .to(threshold, { opacity: 0, ease: "power1.inOut", duration: 0.5 }, 0.8);
 
     // Fade in viewport header and footer once threshold opens
     masterTl.to(['.viewport-header', '.viewport-footer'], {
@@ -288,6 +290,22 @@ mm.add("(prefers-reduced-motion: no-preference)", () => {
       },
       4.6
     );
+
+    // INVERT HEADER/FOOTER COLORS: Dark text over the new bright Ivory background
+    masterTl.to(['.brand', '.nav-links a', '.concierge-inquiry-capsule'], {
+      color: "#1a1512",
+      textShadow: "none",
+      ease: "power3.inOut",
+      duration: 1.8
+    }, 4.6);
+    
+    // Invert CTA background/border specifically
+    masterTl.to('.concierge-inquiry-capsule', {
+      borderColor: "rgba(26, 21, 18, 0.4)",
+      backgroundColor: "transparent",
+      ease: "power3.inOut",
+      duration: 1.8
+    }, 4.6);
 
     // The Atelier Panel slides perfectly into the void created by the squeeze
     masterTl.fromTo('.atelier-panel',
