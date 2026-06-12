@@ -1,5 +1,5 @@
 import './style.css'
-import Lenis from 'lenis'
+
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 
@@ -11,6 +11,7 @@ let nextVideoElement = document.getElementById('master-bg-video-next') as HTMLVi
 let currentSrc = activeVideoElement ? activeVideoElement.getAttribute('src') || '' : '';
 let isTransitioning = false;
 
+// fallow-ignore-next-line complexity
 function transitionToVideo(newSrc: string, duration: number = 1.5) {
   // Deduplicate: ignore if same video is already playing
   if (currentSrc === newSrc) return;
@@ -75,22 +76,12 @@ if ('scrollRestoration' in history) {
 }
 window.scrollTo(0, 0);
 
+import { initSmoothScroll } from './utils/scroll'
+
 // 1. Lenis Smooth Scroll Foundation
-const lenis = new Lenis({
-  duration: 1.2,
-  easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-  smoothWheel: true,
-})
+initSmoothScroll()
 
 const actIiRooms = document.querySelectorAll('.room-section')
-
-lenis.on('scroll', ScrollTrigger.update)
-
-gsap.ticker.add((time) => {
-  lenis.raf(time * 1000)
-})
-
-gsap.ticker.lagSmoothing(0)
 
 /**
  * Splits text contents into nested word/character spans for premium staggered reveals.
@@ -167,6 +158,7 @@ const punchlines = gsap.utils.toArray('.punchline-text') as HTMLElement[]
 
 
 
+// fallow-ignore-next-line complexity
 mm.add("(prefers-reduced-motion: no-preference)", () => {
   
   // ==========================================
@@ -436,14 +428,7 @@ mm.add("(prefers-reduced-motion: no-preference)", () => {
     }
   });
 
-  const roomVideoSources = [
-    "/videos/Tracking_push_through_portico_202606112043.mp4",
-    "/videos/Steam_rises_from_bathtub_202606091909.mp4",
-    "/videos/Slow_push-in_toward_ottoman_202606091909.mp4",
-    "/videos/Tracking_shot_down_hallway_202606091909.mp4",
-    "/videos/Slow_push_into_sunken_salon_202606112050.mp4",
-    "/videos/Static_camera_subtle_pan_left_202606091909.mp4"
-  ];
+
 
   // Reset clip-path on entering Act II
   ScrollTrigger.create({
@@ -469,18 +454,27 @@ mm.add("(prefers-reduced-motion: no-preference)", () => {
     }
   );
 
-  actIiRooms.forEach((room, index) => {
+  actIiRooms.forEach((room) => {
       const captionTitle = (room as HTMLElement).querySelector('.room-caption-title');
       const captionDesc = (room as HTMLElement).querySelector('.room-caption-desc');
 
-      // Video Swapping Trigger
-      ScrollTrigger.create({
-        trigger: room,
-        start: "top 60%",
-        end: "bottom 40%",
-        onEnter: () => transitionToVideo(roomVideoSources[index], 1.5),
-        onEnterBack: () => transitionToVideo(roomVideoSources[index], 1.5),
-      });
+      // Parallax translation for the physical video inside each room
+      const roomVideo = (room as HTMLElement).querySelector('.room-video-container video');
+      if (roomVideo) {
+        gsap.fromTo(roomVideo,
+          { yPercent: -30 }, // Start slightly pulled up
+          {
+            yPercent: 30, // End slightly pushed down
+            ease: "none",
+            scrollTrigger: {
+              trigger: room,
+              start: "top bottom",
+              end: "bottom top",
+              scrub: true
+            }
+          }
+        );
+      }
 
       // Staggered reveal for Title and Description
       const captionElements = [captionTitle, captionDesc];
