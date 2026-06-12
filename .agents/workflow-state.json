@@ -2,11 +2,10 @@
   "workflow": "workflow-project-inception",
   "current_phase": "Implementation & Aesthetics",
   "completion_pct": 90,
-  "notes": "Session ended. Act II Parallax cylinder layout finalized with perfectly widened side margins (inset 1.5vw). The alternative flat overlapping parallax component was stored in the skills reference library. NEXT SESSION TASKS: 1) Overhaul the opening sequence/initial load animation. 2) Rewrite and refine typography on the Act II Parallax sections. 3) Build a transition animation between Act II and Act III (possibly video-spanning). 4) Complete Act III (the ending), deciding on and implementing its video component. 5) Build a premium footer section.",
+  "notes": "Session ended. Act II Parallax cylinder layout finalized. CRITICAL INSTRUCTION FOR NEW AGENT: DO NOT try to read old context files (e.g., md5 storyboards, old research docs, old concept files). We are building dynamically and iteratively 'on the fly'. Ignore old documentation. Instead, your very first action should be to discuss concepts and references with the user, as they have many references ready for transitioning, typography, etc. NEXT SESSION TASKS (to be discussed with user before coding): 1) Overhaul the opening sequence/initial load animation. 2) Rewrite and refine typography on the Act II Parallax sections. 3) Build a transition animation between Act II and Act III. 4) Complete Act III (the ending), deciding on its video component. 5) Build a premium footer section.",
   "key_decisions": [
     "Pivoted to Tropical Modernism for a breathable sanctuary feel instead of a concrete fortress.",
     "Adopted a gallery-label typography lockup in the bottom left for Act II captions to avoid obscuring videos.",
-    "Replaced the horizontal fisheye cylinder in Act III with a pinned Stop-Motion Assemblage table composition.",
     "Decided to use the Cylinder Parallax effect for Act II, widened via 1.5vw inset margins, while banking the flat overlapping deck for future reference."
   ],
   "blockers": []
