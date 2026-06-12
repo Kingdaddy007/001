@@ -465,9 +465,9 @@ mm.add("(prefers-reduced-motion: no-preference)", () => {
       if (roomVideoContainer && roomVideo) {
         // 1. The subtle "Cylinder" 3D tilt on the container itself
         gsap.fromTo(roomVideoContainer,
-          { rotationX: -15, scale: 0.95 }, 
+          { rotationX: -15, scale: 1.05 }, 
           {
-            rotationX: 15, scale: 0.95,
+            rotationX: 15, scale: 1.05,
             ease: "none",
             scrollTrigger: {
               trigger: room,

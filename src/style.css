@@ -475,8 +475,8 @@ html.lenis { height: auto; }
 /* Parallax video container acting as the physical background for each room */
 .room-video-container { 
   position: absolute; 
-  /* Inset gives it the 'square/card' look so bent edges are visible */
-  inset: 2vw; 
+  /* Tighter inset so the cards are wider and gaps are smaller, while keeping bent edges visible */
+  inset: 1vh 1vw; 
   z-index: -1; /* Send it behind the text */
   overflow: clip; /* Essential for parallax cropping */
   border-radius: 40px; /* Bent edges / rounded corners! */
@@ -517,16 +517,17 @@ html.lenis { height: auto; }
   text-shadow: var(--espresso-shadow-strong);
 }
 
-/* Master Background Video Underlay */
+/* Master Cinematic Background Underlay */
 #master-bg-video-container {
   position: fixed;
   top: 0;
   left: 0;
   width: 100vw;
   height: 100vh;
-  z-index: -1; /* FIX: Behind all static content, but visible when parents have transparent backgrounds */
+  z-index: -1; 
   overflow: hidden;
-  background-color: var(--bg-primary);
+  /* A beautiful, deep cinematic shade replacing the looping background video */
+  background: radial-gradient(circle at center, #1c1a18 0%, #080808 100%);
   will-change: clip-path;
 }
 
