@@ -258,7 +258,7 @@ mm.add("(prefers-reduced-motion: no-preference)", () => {
 
     // Spatial Reframing: Cinematic Aspect Ratio Squeeze
     // Physically crops the video using the exact specs from the global motion library
-    masterTl.fromTo('#master-bg-video-container', 
+    masterTl.fromTo('.hero-container', 
       { clipPath: "inset(0vh 0vw 0vh 0vw round 0px)" },
       { 
         clipPath: "inset(15vh 55vw 15vh 5vw round 24px)", 
@@ -441,7 +441,8 @@ mm.add("(prefers-reduced-motion: no-preference)", () => {
     "/videos/Steam_rises_from_bathtub_202606091909.mp4",
     "/videos/Slow_push-in_toward_ottoman_202606091909.mp4",
     "/videos/Tracking_shot_down_hallway_202606091909.mp4",
-    "/videos/Slow_push_into_sunken_salon_202606112050.mp4"
+    "/videos/Slow_push_into_sunken_salon_202606112050.mp4",
+    "/videos/Static_camera_subtle_pan_left_202606091909.mp4"
   ];
 
   // Reset clip-path on entering Act II
@@ -527,11 +528,11 @@ mm.add("(prefers-reduced-motion: no-preference)", () => {
       pin: true,
       scrub: 1.2,
       onEnter: () => {
-        transitionToVideo('/videos/lifestyle_1.mp4', 1.5);
+        transitionToVideo('/videos/Slow_push_into_sunken_salon_202606112050.mp4', 1.5);
         gsap.to('.master-bg-overlay', { backgroundColor: 'rgba(9, 9, 11, 0.75)', duration: 0.8 }); // Increase dimming for text
       },
       onEnterBack: () => {
-        transitionToVideo('/videos/lifestyle_1.mp4', 1.5);
+        transitionToVideo('/videos/Slow_push_into_sunken_salon_202606112050.mp4', 1.5);
         gsap.to('.master-bg-overlay', { backgroundColor: 'rgba(9, 9, 11, 0.75)', duration: 0.8 });
       }
     }
@@ -563,11 +564,11 @@ mm.add("(prefers-reduced-motion: no-preference)", () => {
       end: "bottom bottom",
       scrub: 1.2,
       onEnter: () => {
-        transitionToVideo('/videos/lifestyle_2.mp4', 1.5);
+        transitionToVideo('/videos/Static_camera_subtle_pan_left_202606091909.mp4', 1.5);
         gsap.to('.master-bg-overlay', { backgroundColor: 'rgba(9, 9, 11, 0.4)', duration: 0.8 }); // Lighten overlay for final room glow
       },
       onEnterBack: () => {
-        transitionToVideo('/videos/lifestyle_2.mp4', 1.5);
+        transitionToVideo('/videos/Static_camera_subtle_pan_left_202606091909.mp4', 1.5);
         gsap.to('.master-bg-overlay', { backgroundColor: 'rgba(9, 9, 11, 0.4)', duration: 0.8 });
       }
     }

@@ -499,7 +499,7 @@ html.lenis { height: auto; }
   left: 0;
   width: 100vw;
   height: 100vh;
-  z-index: 1; /* ROOT CAUSE FIX: was -2, which body background painted over. Now above bg, below all content at z-index 20+ */
+  z-index: -1; /* FIX: Behind all static content, but visible when parents have transparent backgrounds */
   overflow: hidden;
   background-color: var(--bg-primary);
   will-change: clip-path;
