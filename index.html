@@ -22,6 +22,10 @@
     <!-- Hidden SVG for Advanced Filters & Masks -->
     <svg width="0" height="0" style="position: absolute; pointer-events: none;" aria-hidden="true">
       <defs>
+        <filter id="distort-blur" color-interpolation-filters="sRGB">
+          <feGaussianBlur id="arrival-blur" in="SourceGraphic" stdDeviation="15" result="blur" />
+          <feDisplacementMap id="arrival-displacement" in="blur" in2="SourceGraphic" scale="80" xChannelSelector="R" yChannelSelector="G" />
+        </filter>
         <filter id="fractional-blur" color-interpolation-filters="sRGB">
           <!-- The stdDeviation is animated dynamically via GSAP -->
           <feGaussianBlur id="silence-blur" stdDeviation="12" result="blur" />
@@ -87,7 +91,7 @@
             </div>
             
             <div class="threshold">
-              <h1 class="threshold-text">THE NOISE STAYS OUTSIDE.</h1>
+              <h1 id="arrival-brand" class="threshold-text" style="filter: url(#distort-blur);">LATERITE</h1>
             </div>
 
             <div class="punchline-container staircase-layout">

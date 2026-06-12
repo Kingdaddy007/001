@@ -109,13 +109,14 @@ html.lenis { height: auto; }
 .threshold { position: absolute; inset: 0; background-color: var(--bg-primary); display: flex; align-items: center; justify-content: center; z-index: 2; pointer-events: none; }
 .threshold-text { 
   font-family: var(--font-display);
-  font-size: clamp(3rem, 5.5vw, 6rem);
-  font-weight: 700;
+  font-size: 8vw;
+  font-weight: 300;
+  letter-spacing: 0.1em;
   text-transform: uppercase;
   margin: 0;
   line-height: 1;
   color: var(--text-primary); 
-  will-change: transform, opacity; 
+  will-change: transform, opacity, filter, letter-spacing; 
   transform-origin: center center; 
 }
 

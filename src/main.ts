@@ -196,6 +196,26 @@ mm.add("(prefers-reduced-motion: no-preference)", () => {
     }
   }
 
+  // ==========================================
+  // LATERITE FOG REVEAL (Starts on Load)
+  // ==========================================
+  const arrivalTl = gsap.timeline({
+    onComplete: () => {
+      // Once fog completes, remove the SVG filter to free up GPU for the rest of the timeline
+      gsap.set('#arrival-brand', { filter: 'none', clearProps: 'filter' });
+    }
+  });
+
+  // The text starts with opacity: 0 from style.css
+  // Animate opacity, blur, displacement, and letter spacing together
+  arrivalTl.to('#arrival-brand', { opacity: 1, duration: 1.0, ease: "power2.inOut" }, 0.2)
+    .to('#arrival-blur', { attr: { stdDeviation: 0 }, duration: 2.5, ease: "power2.inOut" }, 0.5)
+    .to('#arrival-displacement', { attr: { scale: 0 }, duration: 2.5, ease: "power2.inOut" }, 0.5)
+    .to('#arrival-brand', { letterSpacing: "0.25em", duration: 3.5, ease: "power1.out" }, 0.5);
+
+  // ==========================================
+  // MASTER TIMELINE (Scroll-Triggered)
+  // ==========================================
   const masterTl = gsap.timeline({
     scrollTrigger: {
       trigger: '.pinned-scene-wrapper',
