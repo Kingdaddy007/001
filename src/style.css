@@ -461,13 +461,25 @@ html.lenis { height: auto; }
   background: transparent;
   box-shadow: 0 -20px 50px rgba(0,0,0,0.5);
 }
-.room-section { position: relative; width: 100%; height: 100svh; display: flex; align-items: flex-end; z-index: 1; padding: 6vw; background: transparent; }
+.room-section { 
+  position: relative; 
+  width: 100%; 
+  height: 100svh; 
+  display: flex; 
+  align-items: flex-end; 
+  z-index: 1; 
+  padding: 6vw; 
+  background: transparent; 
+  perspective: 1500px; /* Essential for 3D cylinder tilt effect */
+}
 /* Parallax video container acting as the physical background for each room */
 .room-video-container { 
   position: absolute; 
-  inset: 0; 
+  /* Inset gives it the 'square/card' look so bent edges are visible */
+  inset: 2vw; 
   z-index: -1; /* Send it behind the text */
   overflow: clip; /* Essential for parallax cropping */
+  border-radius: 40px; /* Bent edges / rounded corners! */
   pointer-events: none; 
 }
 .room-video-container video {
@@ -476,14 +488,7 @@ html.lenis { height: auto; }
   object-fit: cover;
   will-change: transform;
 }
-/* A vignette to make the text readable over the video */
-.room-video-container::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(180deg, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0.0) 50%, rgba(0,0,0,0.7) 100%);
-  pointer-events: none;
-}
+/* Vignette completely removed for maximum clarity */
 .room-caption {
   position: relative;
   z-index: 10;

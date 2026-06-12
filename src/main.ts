@@ -459,12 +459,30 @@ mm.add("(prefers-reduced-motion: no-preference)", () => {
       const captionDesc = (room as HTMLElement).querySelector('.room-caption-desc');
 
       // Parallax translation for the physical video inside each room
+      const roomVideoContainer = (room as HTMLElement).querySelector('.room-video-container');
       const roomVideo = (room as HTMLElement).querySelector('.room-video-container video');
-      if (roomVideo) {
-        gsap.fromTo(roomVideo,
-          { yPercent: -30 }, // Start slightly pulled up
+      
+      if (roomVideoContainer && roomVideo) {
+        // 1. The subtle "Cylinder" 3D tilt on the container itself
+        gsap.fromTo(roomVideoContainer,
+          { rotationX: -15, scale: 0.95 }, 
           {
-            yPercent: 30, // End slightly pushed down
+            rotationX: 15, scale: 0.95,
+            ease: "none",
+            scrollTrigger: {
+              trigger: room,
+              start: "top bottom",
+              end: "bottom top",
+              scrub: true
+            }
+          }
+        );
+
+        // 2. The standard vertical parallax on the video inside
+        gsap.fromTo(roomVideo,
+          { yPercent: -30 }, 
+          {
+            yPercent: 30, 
             ease: "none",
             scrollTrigger: {
               trigger: room,
