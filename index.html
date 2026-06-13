@@ -15,8 +15,12 @@
     </script>
   </head>
   <body>
-    <!-- Pure cinematic dark background replacing the distracting looping background video -->
-    <div id="master-bg-video-container"></div>
+    <!-- Master Cinematic Background Underlay for Act III/IV Transitions -->
+    <div id="master-bg-video-container">
+      <video id="master-bg-video-active" class="bg-video active" muted playsinline preload="auto" autoplay loop></video>
+      <video id="master-bg-video-next" class="bg-video" muted playsinline preload="auto" autoplay loop></video>
+      <div class="master-bg-overlay"></div>
+    </div>
     <div class="film-grain"></div>
 
     <!-- Hidden SVG for Advanced Filters & Masks -->
@@ -50,9 +54,6 @@
 
       <div class="concierge-inquiry-capsule" tabindex="0">
         <span>Request a consultation</span>
-        <svg class="capsule-arrow" viewBox="0 0 24 24" width="16" height="16">
-          <path d="M5 12h14M12 5l7 7-7 7" stroke="currentColor" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
-        </svg>
       </div>
     </footer>
 
@@ -63,7 +64,6 @@
         <!-- ACT I.5: The Narrative Bridge (Stationary Underlay, sits behind Hero) -->
         <section class="narrative-bridge">
           <div class="bridge-content" style="opacity: 0;">
-            <span class="bridge-number">02 / THE DESCENT</span>
             <h2 class="bridge-headline">A sanctuary is not a sealed fortress.</h2>
             <p class="bridge-body">It is a sequence of breathable thresholds.<br>To understand our architecture, one must move through the light we have filtered from the heat.</p>
             <div class="bridge-scroll-indicator">Scroll to cross the thresholds &darr;</div>
@@ -75,7 +75,8 @@
           <!-- ACT I: The Hero (Slides up at the end to reveal bridge) -->
           <section class="hero-container act-i">
             <div class="sanctuary">
-              <video class="sanctuary-video" src="/Camera_push_into_room_202606091451.mp4" muted playsinline preload="auto" autoplay loop></video>
+              <video class="sanctuary-video" src="/Sunlight_creeps_across_concrete.mp4" muted playsinline preload="auto" autoplay loop></video>
+              <video class="sanctuary-ambient" src="/Sunlight_creeps_across_concrete.mp4" muted playsinline preload="auto" autoplay loop></video>
             </div>
             
             <div class="threshold" id="threshold-container">
@@ -194,44 +195,56 @@
         </section>
       </div>
 
-      <!-- ACT III: Hybrid Client Storytelling -->
-      <section id="storytelling-section" class="act-iii">
-        <div class="storytelling-pin-container">
+      <!-- ACT III: Hybrid Client Storytelling (Editorial Layout) -->
+      <section id="storytelling-section" class="act-iii editorial-layout">
+        <div class="storytelling-pin-container editorial-container">
           
-          <!-- Part 1: Poetic Intro -->
-          <div class="storytelling-panel intro-panel active">
-            <div class="storytelling-content">
-              <span class="section-label">03 / THE POETRY OF SPACE</span>
-              <h2 class="story-headline">We do not build walls.<br>We capture the path of the sun.</h2>
-              <p class="story-body">
-                Every room we design is a study in quietness. We observe the breeze, 
-                we measure the shade, and we build a frame for life to unfold.
-              </p>
+          <div class="editorial-text-col">
+            <!-- Part 1: Poetic Intro -->
+            <div class="storytelling-panel intro-panel active">
+              <div class="storytelling-content">
+                <h2 class="story-headline">We do not build walls.<br>We capture the path of the sun.</h2>
+                <p class="story-body">
+                  Every room we design is a study in quietness. We observe the breeze, 
+                  we measure the shade, and we build a frame for life to unfold.
+                </p>
+              </div>
             </div>
-          </div>
 
-          <!-- Part 2: Testimonial 1 -->
-          <div class="storytelling-panel testimonial-panel" data-testimonial="1">
-            <div class="storytelling-content testimonial-content">
-              <p class="testimonial-quote">
-                "Adebayo didn't just build us a house. He built a fortress of absolute silence where the equatorial heat turns into filtered breeze."
-              </p>
-              <div class="testimonial-meta">
-                <span class="testimonial-client">ALEXIS V.</span>
-                <span class="testimonial-location">THE LIMESTONE HOUSE</span>
+            <!-- Part 2: Testimonial 1 -->
+            <div class="storytelling-panel testimonial-panel" data-testimonial="1">
+              <div class="storytelling-content testimonial-content">
+                <p class="testimonial-quote">
+                  "Adebayo didn't just build us a house. He built a fortress of absolute silence where the equatorial heat turns into filtered breeze."
+                </p>
+                <div class="testimonial-meta">
+                  <span class="testimonial-client">ALEXIS V.</span>
+                  <span class="testimonial-location">THE LIMESTONE HOUSE</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Part 3: Testimonial 2 -->
+            <div class="storytelling-panel testimonial-panel" data-testimonial="2">
+              <div class="storytelling-content testimonial-content">
+                <p class="testimonial-quote">
+                  "We reject the decoration of mid-market design. Here, the raw materials are the ornament: smoked oak, travertine, and shadow."
+                </p>
+                <div class="testimonial-meta">
+                  <span class="testimonial-client">DIARA K.</span>
+                  <span class="testimonial-location">THE SUBTERRANEAN SALON</span>
+                </div>
               </div>
             </div>
           </div>
 
-          <!-- Part 3: Testimonial 2 -->
-          <div class="storytelling-panel testimonial-panel" data-testimonial="2">
-            <div class="storytelling-content testimonial-content">
-              <p class="testimonial-quote">
-                "We reject the decoration of mid-market design. Here, the raw materials are the ornament—smoked oak, travertine, and shadow."
-              </p>
-              <div class="testimonial-meta">
-                <span class="testimonial-client">DIARA K.</span>
-                <span class="testimonial-location">THE SUBTERRANEAN SALON</span>
+          <!-- The Framed Media Column -->
+          <div class="editorial-media-col">
+            <div class="editorial-frame">
+              <div class="editorial-carousel">
+                <img class="editorial-img" id="ed-img-1" src="/images/Rectangle-1.png" alt="Editorial Image 1" />
+                <img class="editorial-img" id="ed-img-2" src="/images/Rectangle-2.png" alt="Editorial Image 2" />
+                <img class="editorial-img" id="ed-img-3" src="/images/Rectangle-3.png" alt="Editorial Image 3" />
               </div>
             </div>
           </div>
@@ -242,7 +255,6 @@
       <!-- ACT IV: Outro / The Invitation -->
       <section id="outro-section" class="act-iv">
         <div class="outro-content">
-          <span class="section-label">04 / THE INVITATION</span>
           <h2 class="outro-headline">Begin with a diagnostic.</h2>
           <p class="outro-body">
             We do not accept every commission. We work with clients who value 
@@ -268,6 +280,11 @@
               <span class="meta-value">Via Montenapoleone, Milan</span>
             </div>
           </div>
+        </div>
+
+        <!-- The Negative Footer Brand Mark -->
+        <div class="giant-footer-brand">
+          LATERITE
         </div>
       </section>
       

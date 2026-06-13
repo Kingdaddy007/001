@@ -1,8 +1,8 @@
 /* src/style.css */
 :root {
-  --bg-primary: #09090B;
-  --text-primary: #E4E4E7;
-  --text-secondary: #A1A1AA;
+  --bg-primary: #1C1916; /* Deep warm taupe/espresso instead of pure black */
+  --text-primary: #EAE6DF; /* Warmer off-white */
+  --text-secondary: #A8A096; /* Warmer grey */
   --accent-primary: #D97706;
   
   --font-display: 'Cormorant Garamond', Georgia, serif;
@@ -15,6 +15,8 @@
   /* Luxury Ivory & Warm Dark Theme */
   --ivory-main: #F7E8CF;
   --ivory-accent: #FFF2D8;
+  --espresso-main: #1C1916;
+  --espresso-secondary: #5A534C;
   --espresso-shadow: 0 3px 18px rgba(43, 26, 18, 0.55);
   --espresso-shadow-strong: 0 3px 18px rgba(43, 26, 18, 0.60);
 }
@@ -141,23 +143,21 @@ html.lenis { height: auto; }
   font-size: 1.4rem; 
   letter-spacing: 0.1em; 
   font-weight: 700;
-  color: var(--ivory-main);
-  text-shadow: var(--espresso-shadow);
+  color: var(--espresso-main);
+  text-shadow: none;
   text-transform: uppercase;
-  transition: color 0.4s ease;
 }
 
 .nav-links { display: flex; gap: 3rem; }
 .nav-links a { 
-  color: var(--ivory-main); 
-  text-shadow: var(--espresso-shadow);
+  color: var(--espresso-main); 
+  text-shadow: none;
   text-decoration: none; 
   font-family: var(--font-body);
   font-size: 0.75rem; 
   letter-spacing: 0.35em; 
   text-transform: uppercase;
   font-weight: 400;
-  transition: color 0.4s ease; 
 }
 .nav-links a:hover { color: var(--accent-primary); }
 
@@ -191,8 +191,8 @@ html.lenis { height: auto; }
   font-family: var(--font-body);
   font-size: 0.7rem;
   letter-spacing: 0.35em;
-  color: var(--ivory-main);
-  text-shadow: var(--espresso-shadow);
+  color: var(--espresso-main);
+  text-shadow: none;
   transition: color 0.4s;
 }
 .audio-control:hover .audio-label {
@@ -208,7 +208,7 @@ html.lenis { height: auto; }
 .eq-bar {
   width: 2px;
   height: 100%;
-  background-color: var(--ivory-main);
+  background-color: var(--espresso-main);
   transform-origin: bottom;
   transition: background-color 0.4s, transform 0.3s;
   animation: eq-scale 1.2s ease-in-out infinite alternate;
@@ -237,31 +237,28 @@ html.lenis { height: auto; }
   align-items: center;
   gap: 1.25rem;
   padding: 0.8rem 2.2rem;
-  border: 1px solid rgba(247, 232, 207, 0.4);
+  border: 1px solid var(--accent-primary);
   border-radius: 100px;
-  background-color: rgba(9, 9, 11, 0.25);
+  background-color: var(--accent-primary);
   cursor: pointer;
   font-family: var(--font-body);
   font-size: 0.7rem;
   letter-spacing: 0.25em;
   text-transform: uppercase;
   color: var(--ivory-main);
-  text-shadow: var(--espresso-shadow);
-  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  text-shadow: none;
   backdrop-filter: blur(var(--glass-blur));
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.4s ease, border-color 0.4s ease, color 0.4s ease;
 }
 .concierge-inquiry-capsule:hover {
-  background-color: var(--ivory-main) !important;
-  color: var(--bg-primary) !important;
-  border-color: var(--ivory-main) !important;
+  background-color: var(--espresso-main) !important;
+  color: var(--ivory-main) !important;
+  border-color: var(--espresso-main) !important;
   transform: translateY(-2px);
   text-shadow: none !important;
 }
 .capsule-arrow {
-  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-}
-.concierge-inquiry-capsule:hover .capsule-arrow {
-  transform: translateX(4px);
+  display: none; /* User requested removal */
 }
 
 /* ACT I: Cascading Staircase Hero Text */
@@ -380,7 +377,7 @@ html.lenis { height: auto; }
   position: absolute;
   inset: 0;
   z-index: 10;
-  background-color: #18120e; /* Deep warm architectural umber matching the fire/dust motes */
+  background-color: var(--ivory-main); /* Changed to ivory */
   display: flex;
   align-items: center;
   justify-content: center;
@@ -395,21 +392,22 @@ html.lenis { height: auto; }
   padding: 0 2rem;
 }
 
-.bridge-number {
+.bridge-number, .section-label {
   font-family: var(--font-body);
   font-size: 0.75rem;
   letter-spacing: 0.35em;
-  color: var(--text-secondary);
+  color: var(--espresso-secondary);
   text-transform: uppercase;
   margin-bottom: 1.5rem;
+  display: block;
 }
 
 .bridge-headline {
   font-family: var(--font-display);
   font-size: clamp(3rem, 5vw, 5rem);
   font-weight: 400;
-  color: var(--ivory-main);
-  text-shadow: var(--espresso-shadow);
+  color: var(--espresso-main);
+  text-shadow: none;
   margin-bottom: 1.5rem;
 }
 
@@ -417,17 +415,17 @@ html.lenis { height: auto; }
   font-family: var(--font-body);
   font-size: 1rem;
   line-height: 1.8;
-  color: var(--ivory-accent);
+  color: var(--espresso-secondary);
   max-width: 600px;
   font-weight: 300;
-  opacity: 0.8;
+  opacity: 0.9;
 }
 
 .bridge-scroll-indicator {
   font-family: var(--font-body);
   font-size: 0.7rem;
   letter-spacing: 0.25em;
-  color: var(--text-secondary);
+  color: var(--espresso-secondary);
   text-transform: uppercase;
   margin-top: 4rem;
   animation: bridge-pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
@@ -516,7 +514,7 @@ html.lenis { height: auto; }
   z-index: -1; 
   overflow: hidden;
   /* A beautiful, deep cinematic shade replacing the looping background video */
-  background: radial-gradient(circle at center, #1c1a18 0%, #080808 100%);
+  background: var(--ivory-main);
   will-change: clip-path;
 }
 
@@ -539,28 +537,77 @@ html.lenis { height: auto; }
 .master-bg-overlay {
   position: absolute;
   inset: 0;
-  background: radial-gradient(circle at center, transparent 30%, rgba(0, 0, 0, 0.3) 100%);
+  background: radial-gradient(circle at center, transparent 30%, rgba(28, 25, 22, 0.05) 100%);
   pointer-events: none;
   z-index: 1;
 }
 
-/* ACT III: Hybrid Client Storytelling */
+/* ACT III: Hybrid Client Storytelling (Editorial Layout) */
 #storytelling-section {
   position: relative;
   width: 100%;
-  height: 300vh; /* Scroll-bound pinned area */
-  background: transparent;
+  height: 400vh; /* Scroll-bound pinned area */
+  background: var(--ivory-main); /* Solid ivory boundary */
+  z-index: 10;
+  margin-top: -100vh; /* Overlap Act II's last card to remove the black void */
 }
 
-.storytelling-pin-container {
+.editorial-container {
   position: sticky;
   top: 0;
   width: 100%;
   height: 100vh;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: center;
+  overflow: hidden;
+  padding: 0 6vw;
+}
+
+.editorial-text-col {
+  position: relative;
+  height: 100%;
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
+  padding-right: 4vw;
+}
+
+.editorial-media-col {
+  position: relative;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.editorial-frame {
+  position: relative;
+  width: 100%;
+  max-width: 500px;
+  aspect-ratio: 3 / 4; /* Elegant portrait frame matching 3:4 images */
+  border-radius: 20px;
   overflow: hidden;
+  box-shadow: var(--espresso-shadow-strong);
+  opacity: 0; /* Animated by GSAP */
+  transform: translateY(30px);
+}
+
+.editorial-carousel {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 300%; /* 3 images */
+  display: flex;
+  flex-direction: column;
+  will-change: transform;
+}
+
+.editorial-img {
+  width: 100%;
+  height: 33.333%; /* 1/3 of the carousel height = 100% of the frame */
+  object-fit: cover;
 }
 
 .storytelling-panel {
@@ -568,8 +615,7 @@ html.lenis { height: auto; }
   inset: 0;
   display: flex;
   align-items: center;
-  justify-content: center;
-  padding: 0 10vw; /* 10% outer padding */
+  justify-content: flex-start;
   opacity: 0;
   visibility: hidden;
   will-change: opacity, transform;
@@ -583,21 +629,21 @@ html.lenis { height: auto; }
 }
 
 .storytelling-content {
-  max-width: 800px;
-  text-align: center;
+  max-width: 500px;
+  text-align: left;
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: flex-start;
   gap: 2rem;
 }
 
 .story-headline {
   font-family: var(--font-display);
-  font-size: clamp(2.5rem, 4.5vw, 4.5rem);
+  font-size: clamp(2.5rem, 4vw, 4rem);
   font-weight: 400;
   line-height: 1.2;
-  color: var(--ivory-main);
-  text-shadow: var(--espresso-shadow);
+  color: var(--espresso-main);
+  text-shadow: none; /* Removed for clean editorial look */
   text-transform: uppercase;
 }
 
@@ -605,25 +651,25 @@ html.lenis { height: auto; }
   font-family: var(--font-body);
   font-size: 0.95rem;
   line-height: 1.8;
-  color: var(--text-secondary);
+  color: var(--espresso-secondary);
   font-weight: 300;
   max-width: 600px;
 }
 
 .testimonial-quote {
   font-family: var(--font-display);
-  font-size: clamp(2rem, 3.5vw, 3.8rem);
+  font-size: clamp(2rem, 3.5vw, 3.5rem);
   font-weight: 300;
   font-style: italic;
   line-height: 1.3;
-  color: var(--ivory-accent);
-  text-shadow: var(--espresso-shadow-strong);
+  color: var(--espresso-main);
+  text-shadow: none; /* Removed for clean editorial look */
 }
 
 .testimonial-meta {
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: flex-start;
   gap: 0.5rem;
   margin-top: 1rem;
 }
@@ -633,7 +679,7 @@ html.lenis { height: auto; }
   font-size: 0.8rem;
   font-weight: 600;
   letter-spacing: 0.25em;
-  color: var(--ivory-main);
+  color: var(--espresso-main);
 }
 
 .testimonial-location {
@@ -641,7 +687,7 @@ html.lenis { height: auto; }
   font-size: 0.7rem;
   font-weight: 400;
   letter-spacing: 0.35em;
-  color: var(--text-secondary);
+  color: var(--espresso-secondary);
 }
 
 /* ACT IV: Outro / The Invitation */
@@ -653,8 +699,9 @@ html.lenis { height: auto; }
   align-items: center;
   justify-content: center;
   padding: 10vh 10vw; /* 10% outer padding */
-  background-color: transparent;
+  background-color: var(--ivory-main); /* Ivory background */
   z-index: 10;
+  overflow: hidden; /* Contains the bleeding giant text */
 }
 
 .outro-content {
@@ -665,6 +712,29 @@ html.lenis { height: auto; }
   align-items: center;
   gap: 2.5rem;
   width: 100%;
+  position: relative;
+  z-index: 2; /* Sits above the giant text */
+}
+
+.giant-footer-brand {
+  position: absolute;
+  bottom: -4vw;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  text-align: center;
+  font-family: var(--font-display);
+  font-size: 22vw; /* Massive screen-width text */
+  font-weight: 300;
+  color: var(--espresso-main);
+  opacity: 0.15; /* Increased opacity to make it visibly ground the page */
+  mix-blend-mode: multiply; /* Helps it blend luxuriously into the ivory background */
+  line-height: 0.8;
+  white-space: nowrap;
+  pointer-events: none;
+  z-index: 0;
+  user-select: none;
+  letter-spacing: 0.02em;
 }
 
 .outro-headline {
@@ -672,8 +742,8 @@ html.lenis { height: auto; }
   font-size: clamp(3rem, 5vw, 5.5rem);
   font-weight: 400;
   line-height: 1.1;
-  color: var(--ivory-main);
-  text-shadow: var(--espresso-shadow);
+  color: var(--espresso-main);
+  text-shadow: none; /* Clean editorial typography */
   text-transform: uppercase;
 }
 
@@ -681,7 +751,7 @@ html.lenis { height: auto; }
   font-family: var(--font-body);
   font-size: 0.95rem;
   line-height: 1.8;
-  color: var(--text-secondary);
+  color: var(--espresso-secondary);
   font-weight: 300;
   max-width: 550px;
 }
@@ -692,7 +762,21 @@ html.lenis { height: auto; }
 
 .concierge-inquiry-capsule.large-cta {
   padding: 1.2rem 3rem;
-  font-size: 0.8rem;
+  font-size: 0.85rem;
+  background-color: var(--accent-primary) !important;
+  color: var(--ivory-main) !important; /* Ivory text */
+  border: none !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  font-weight: 600;
+  letter-spacing: 0.15em;
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.4s ease;
+}
+
+.concierge-inquiry-capsule.large-cta:hover {
+  background-color: var(--espresso-main) !important;
+  color: var(--ivory-main) !important;
+  transform: translateY(-4px);
 }
 
 .outro-footer-metadata {
@@ -700,7 +784,7 @@ html.lenis { height: auto; }
   justify-content: center;
   gap: 4rem;
   margin-top: 4rem;
-  border-top: 1px solid rgba(247, 232, 207, 0.15);
+  border-top: 1px solid rgba(28, 25, 22, 0.15);
   padding-top: 2.5rem;
   width: 100%;
 }
@@ -717,14 +801,14 @@ html.lenis { height: auto; }
   font-size: 0.7rem;
   font-weight: 600;
   letter-spacing: 0.2em;
-  color: var(--ivory-main);
+  color: var(--espresso-main);
 }
 
 .meta-value {
   font-family: var(--font-body);
   font-size: 0.8rem;
   font-weight: 300;
-  color: var(--text-secondary);
+  color: var(--espresso-secondary);
 }
 
 @media (max-width: 768px) {

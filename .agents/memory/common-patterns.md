@@ -10,3 +10,4 @@
   ```
 - **Video Background Layers:** Using `video { object-fit: cover; width: 100vw; height: 100vh }` combined with `z-index` layering to place typography smoothly over cinematic motion.
 - **Clipping Stacking Context Hack:** To achieve rounded top corners on a wrapper without using overflow: hidden (which creates a strict stacking context that blocks position: fixed background elements), use clip-path: inset(0 0 0 0 round 40px 40px 0 0);.
+- **Dynamic Color Inversion (GSAP):** For fixed headers/footers navigating over changing background colors (e.g. going from raw video to a solid Ivory block), use GSAP to tween `color`, `textShadow`, `backgroundColor`, and `borderColor` dynamically. This ensures UI legibility without relying on generic glassmorphism blurs.

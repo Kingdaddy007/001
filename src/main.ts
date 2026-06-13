@@ -217,7 +217,7 @@ mm.add("(prefers-reduced-motion: no-preference)", () => {
     scrollTrigger: {
       trigger: '.pinned-scene-wrapper',
       start: 'top top',
-      end: '+=500%', 
+      end: '+=300%', 
       pin: true,
       scrub: 1, 
       anticipatePin: 1
@@ -292,20 +292,25 @@ mm.add("(prefers-reduced-motion: no-preference)", () => {
     );
 
     // INVERT HEADER/FOOTER COLORS: Dark text over the new bright Ivory background
-    masterTl.to(['.brand', '.nav-links a', '.concierge-inquiry-capsule'], {
-      color: "#1a1512",
-      textShadow: "none",
-      ease: "power3.inOut",
-      duration: 1.8
-    }, 4.6);
+    // Using fromTo guarantees it starts as Ivory regardless of scroll position on load
+    masterTl.fromTo(['.brand', '.nav-links a', '.concierge-inquiry-capsule'], 
+      { color: "#F7E8CF", textShadow: "0 2px 10px rgba(26,21,18,0.3)" },
+      {
+        color: "#1a1512",
+        textShadow: "none",
+        ease: "power3.inOut",
+        duration: 1.8
+      }, 4.6);
     
     // Invert CTA background/border specifically
-    masterTl.to('.concierge-inquiry-capsule', {
-      borderColor: "rgba(26, 21, 18, 0.4)",
-      backgroundColor: "transparent",
-      ease: "power3.inOut",
-      duration: 1.8
-    }, 4.6);
+    masterTl.fromTo('.concierge-inquiry-capsule', 
+      { borderColor: "rgba(247, 232, 207, 0.4)", backgroundColor: "transparent" },
+      {
+        borderColor: "rgba(26, 21, 18, 0.4)",
+        backgroundColor: "transparent",
+        ease: "power3.inOut",
+        duration: 1.8
+      }, 4.6);
 
     // The Atelier Panel slides perfectly into the void created by the squeeze
     masterTl.fromTo('.atelier-panel',
@@ -473,9 +478,29 @@ mm.add("(prefers-reduced-motion: no-preference)", () => {
     trigger: '.act-ii-wrapper',
     start: 'top bottom',
     onEnter: () => {
-      gsap.set('#master-bg-video-container', { clipPath: "inset(0vh 0vw 0vh 0vw round 0px)" });
+      gsap.to('.hero-container', { clipPath: "inset(0vh 0vw 0vh 0vw round 0px)", duration: 0.5 });
     }
   });
+
+  // ==========================================
+  // ACT II -> ACT III TRANSITION (Cinematic Frame Expansion)
+  // ==========================================
+  // Act III physically overlaps the final pinned card of Act II by -100vh.
+  // As the dark "veil" of Act III smoothly slides up over the Wine Bar, 
+  // the picture frame on the right expands from a small geometric square into its full portrait glory!
+  gsap.fromTo('.editorial-frame', 
+    { clipPath: "inset(40% 40% 40% 40% round 10px)", opacity: 1, y: 0 }, 
+    {
+      clipPath: "inset(0% 0% 0% 0% round 20px)",
+      ease: "power2.inOut",
+      scrollTrigger: {
+        trigger: "#storytelling-section",
+        start: "top top", // Starts as the dark veil begins covering the Wine Bar
+        end: "+=100%", // Finishes exactly as the overlap ends
+        scrub: 1.2
+      }
+    }
+  );
 
   // Parallax translation on the fixed container across the entire descent
   gsap.fromTo('#master-bg-video-container', 
@@ -570,41 +595,46 @@ mm.add("(prefers-reduced-motion: no-preference)", () => {
   // ==========================================
   // ACT III: HYBRID CLIENT STORYTELLING & ACT IV OUTRO
   // ==========================================
+  
   const storyTl = gsap.timeline({
     scrollTrigger: {
       trigger: "#storytelling-section",
       start: "top top",
       end: "bottom bottom",
-      pin: true,
+      pin: ".editorial-container",
       scrub: 1.2,
       onEnter: () => {
-        transitionToVideo('/videos/Slow_push_into_sunken_salon_202606112050.mp4', 1.5);
-        gsap.to('.master-bg-overlay', { backgroundColor: 'rgba(9, 9, 11, 0.75)', duration: 0.8 }); // Increase dimming for text
+        // Fade in the editorial frame smoothly
+        gsap.to('.editorial-frame', { opacity: 1, y: 0, duration: 1.2, ease: "power2.out" });
       },
-      onEnterBack: () => {
-        transitionToVideo('/videos/Slow_push_into_sunken_salon_202606112050.mp4', 1.5);
-        gsap.to('.master-bg-overlay', { backgroundColor: 'rgba(9, 9, 11, 0.75)', duration: 0.8 });
+      onLeaveBack: () => {
+        gsap.to('.editorial-frame', { opacity: 0, y: 30, duration: 0.8 });
       }
     }
   });
 
-  // Panel transitions using autoAlpha for smooth visibility + opacity
-  gsap.set('.storytelling-panel', { autoAlpha: 0, y: 30 });
-  
-  storyTl.to(".intro-panel", { autoAlpha: 1, y: 0, duration: 1.0, ease: "power2.out" });
-  storyTl.to({}, { duration: 1.5 }); // Pinned hold
+  const panels = gsap.utils.toArray('.storytelling-panel') as HTMLElement[];
 
-  storyTl.to(".intro-panel", { autoAlpha: 0, y: -30, duration: 1.0, ease: "power2.in" })
-    .to("[data-testimonial='1']", { autoAlpha: 1, y: 0, duration: 1.0, ease: "power2.out" }, "+=0.2");
-  storyTl.to('#master-bg-video-container', { scale: 1, duration: 2.0, ease: "power1.inOut" }, "-=2.0"); // Camera drift
-  storyTl.to({}, { duration: 1.5 });
+  // Set initial states
+  gsap.set(panels, { opacity: 0, visibility: 'hidden', y: 30 });
+  gsap.set(panels[0], { opacity: 1, visibility: 'visible', y: 0 });
 
-  storyTl.to("[data-testimonial='1']", { autoAlpha: 0, y: -30, duration: 1.0, ease: "power2.in" })
-    .to("[data-testimonial='2']", { autoAlpha: 1, y: 0, duration: 1.0, ease: "power2.out" }, "+=0.2");
-  storyTl.to('#master-bg-video-container', { scale: 1.0, duration: 2.0, ease: "power1.inOut" }, "-=2.0"); // Return drift
-  storyTl.to({}, { duration: 1.5 });
+  // Phase 1: The Wait (0s to 1s)
+  // The frame is expanding due to the separate clipPath ScrollTrigger. 
+  // Text 1 and Image 1 sit completely still for the first 100vh of scroll.
+  storyTl.to({}, { duration: 1 });
 
-  storyTl.to("[data-testimonial='2']", { autoAlpha: 0, y: -30, duration: 1.0, ease: "power2.in" });
+  // Phase 2: Slide to Image 2 & Text 2 (1s to 2s)
+  storyTl.to('.editorial-carousel', { yPercent: -33.333, duration: 0.5, ease: 'power2.inOut' }, 1);
+  storyTl.to(panels[0], { opacity: 0, y: -30, duration: 0.5, ease: 'power2.inOut' }, 1);
+  storyTl.to(panels[1], { opacity: 1, y: 0, visibility: 'visible', duration: 0.5, ease: 'power2.inOut' }, 1);
+  storyTl.to({}, { duration: 0.5 }); // Hold Image 2
+
+  // Phase 3: Slide to Image 3 & Text 3 (2s to 3s)
+  storyTl.to('.editorial-carousel', { yPercent: -66.666, duration: 0.5, ease: 'power2.inOut' }, 2);
+  storyTl.to(panels[1], { opacity: 0, y: -30, duration: 0.5, ease: 'power2.inOut' }, 2);
+  storyTl.to(panels[2], { opacity: 1, y: 0, visibility: 'visible', duration: 0.5, ease: 'power2.inOut' }, 2);
+  storyTl.to({}, { duration: 0.5 }); // Hold Image 3
 
   // ACT IV: OUTRO RESOLUTION
   const outroTl = gsap.timeline({
@@ -612,34 +642,21 @@ mm.add("(prefers-reduced-motion: no-preference)", () => {
       trigger: "#outro-section",
       start: "top bottom",
       end: "bottom bottom",
-      scrub: 1.2,
-      onEnter: () => {
-        transitionToVideo('/videos/Static_camera_subtle_pan_left_202606091909.mp4', 1.5);
-        gsap.to('.master-bg-overlay', { backgroundColor: 'rgba(9, 9, 11, 0.4)', duration: 0.8 }); // Lighten overlay for final room glow
-      },
-      onEnterBack: () => {
-        transitionToVideo('/videos/Static_camera_subtle_pan_left_202606091909.mp4', 1.5);
-        gsap.to('.master-bg-overlay', { backgroundColor: 'rgba(9, 9, 11, 0.4)', duration: 0.8 });
-      }
+      scrub: 1.2
     }
   });
 
-  // Cinematic Letterbox Frame Resolution
-  outroTl.to("#master-bg-video-container", {
-    clipPath: "inset(8vh 8vw 8vh 8vw round 24px)",
-    ease: "power2.inOut",
-    duration: 2.0
-  });
-
   // Soft blur and dim overlay on active background video
+  // (Left over for Act II descent if we want)
   outroTl.fromTo("#master-bg-video-container .bg-video", 
     { filter: "brightness(0.75) blur(0px)" },
     { 
-      filter: "brightness(0.35) blur(2px)",
+      filter: "brightness(0.3) blur(10px)",
+      ease: "power2.inOut",
       duration: 2.0
-    }, 0);
-})
-
+    }
+  );
+});
 // Reduced Motion Fallback
 mm.add("(prefers-reduced-motion: reduce)", () => {
   const tl = gsap.timeline({

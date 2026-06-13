@@ -1,12 +1,17 @@
 {
   "workflow": "workflow-project-inception",
-  "current_phase": "Implementation & Aesthetics",
-  "completion_pct": 90,
-  "notes": "Session ended. Act II Parallax cylinder layout finalized. CRITICAL INSTRUCTION FOR NEW AGENT: DO NOT try to read old context files (e.g., md5 storyboards, old research docs, old concept files). We are building dynamically and iteratively 'on the fly'. Ignore old documentation. Instead, your very first action should be to discuss concepts and references with the user, as they have many references ready for transitioning, typography, etc. NEXT SESSION TASKS (to be discussed with user before coding): 1) Overhaul the opening sequence/initial load animation. 2) Rewrite and refine typography on the Act II Parallax sections. 3) Build a transition animation between Act II and Act III. 4) Complete Act III (the ending), deciding on its video component. 5) Build a premium footer section.",
+  "current_phase": "Final Polish & Theme Exploration",
+  "completion_pct": 95,
+  "notes": "Act III was completely refactored from video crossfades to an infinite-scroll vertical image carousel, synchronized with fading typography. Act IV was upgraded with the 'Negative Footer' architectural pattern, bleeding the brand name THRESHOLD at the bottom in massive, low-opacity typography. The next session will focus on testing 'Option 2' (an all-Ivory website theme) and doing final pixel-perfect finishings, including removing the numerical section labels (e.g., '04 / THE INVITATION').",
   "key_decisions": [
     "Pivoted to Tropical Modernism for a breathable sanctuary feel instead of a concrete fortress.",
     "Adopted a gallery-label typography lockup in the bottom left for Act II captions to avoid obscuring videos.",
-    "Decided to use the Cylinder Parallax effect for Act II, widened via 1.5vw inset margins, while banking the flat overlapping deck for future reference."
+    "Decided to use the Cylinder Parallax effect for Act II, widened via 1.5vw inset margins.",
+    "Brand name is definitively LATERITE (though THRESHOLD is used as the architectural studio name in the footer).",
+    "Implemented Dynamic Color Inversion: Header and footer text smoothly transition from Ivory over the raw video to Dark Espresso over the solid Ivory background.",
+    "Maintained dark warm umber (#1C1916) for the Act III and IV background as an architectural palate cleanser.",
+    "Pivoted Act III from video backgrounds to static, high-end 'Room' portraits (Living Room, Bedroom, Dining Room) to anchor the poetic copy in reality.",
+    "Implemented a 'Negative / Large-Type Hybrid' footer for Act IV, featuring the word THRESHOLD spanning the viewport width at 22vw."
   ],
   "blockers": []
 }
