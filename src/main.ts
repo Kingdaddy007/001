@@ -5,69 +5,7 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger'
 
 gsap.registerPlugin(ScrollTrigger)
 
-// Video underlay controller — guards against AbortError from rapid scroll triggers
-let activeVideoElement = document.getElementById('master-bg-video-active') as HTMLVideoElement;
-let nextVideoElement = document.getElementById('master-bg-video-next') as HTMLVideoElement;
-let currentSrc = activeVideoElement ? activeVideoElement.getAttribute('src') || '' : '';
-let isTransitioning = false;
 
-// fallow-ignore-next-line complexity
-function transitionToVideo(newSrc: string, duration: number = 1.5) {
-  // Deduplicate: ignore if same video is already playing
-  if (currentSrc === newSrc) return;
-  // Guard: if a transition is mid-flight, don't stack another load() on top
-  // (that's what causes the AbortError — load() interrupts an in-flight play())
-  if (isTransitioning) {
-    // Queue the intent: when the current transition finishes, we'll be on the right video
-    // For now, just update the target src so the next onEnter picks it up
-    currentSrc = newSrc;
-    return;
-  }
-
-  currentSrc = newSrc;
-  isTransitioning = true;
-
-  if (!nextVideoElement || !activeVideoElement) {
-    isTransitioning = false;
-    return;
-  }
-
-  // Kill any existing tweens on these elements before starting new ones
-  gsap.killTweensOf([activeVideoElement, nextVideoElement]);
-
-  nextVideoElement.src = newSrc;
-  nextVideoElement.load();
-
-  const playPromise = nextVideoElement.play();
-  if (playPromise === undefined) {
-    // Old browser: no promise returned, just cross-fade immediately
-    gsap.set(activeVideoElement, { opacity: 0 });
-    gsap.set(nextVideoElement, { opacity: 0.75 });
-    const temp = activeVideoElement; activeVideoElement = nextVideoElement; nextVideoElement = temp;
-    isTransitioning = false;
-    return;
-  }
-
-  playPromise.then(() => {
-    gsap.timeline({ onComplete: () => { isTransitioning = false; } })
-      .to(activeVideoElement, { opacity: 0, duration: duration, ease: "power2.inOut" })
-      .to(nextVideoElement, { opacity: 0.75, duration: duration, ease: "power2.inOut" }, 0)
-      .call(() => {
-        const temp = activeVideoElement;
-        activeVideoElement = nextVideoElement;
-        nextVideoElement = temp;
-      });
-  }).catch((err: Error) => {
-    // AbortError is expected if the user scrolls very fast — handle gracefully
-    if (err.name === 'AbortError') {
-      // The src was already updated; just swap state silently
-      const temp = activeVideoElement; activeVideoElement = nextVideoElement; nextVideoElement = temp;
-    } else {
-      console.warn("Video transition error:", err);
-    }
-    isTransitioning = false;
-  });
-}
 
 // Force scroll to top on every page load — prevents GSAP from waking mid-animation
 // when Chrome restores the previous scroll position
@@ -151,7 +89,6 @@ const mm = gsap.matchMedia()
 
 // Act I Elements
 const heroContainer = document.querySelector('.hero-container') as HTMLElement
-const mainSection = document.querySelector('main') as HTMLElement
 const threshold = document.querySelector('.threshold') as HTMLElement
 const punchlines = gsap.utils.toArray('.punchline-text') as HTMLElement[]
 const actIForeground = document.querySelector('.act-i-foreground') as HTMLElement
@@ -662,8 +599,7 @@ mm.add("(prefers-reduced-motion: reduce)", () => {
   const tl = gsap.timeline({
     scrollTrigger: { trigger: heroContainer, start: 'top top', end: 'bottom top', scrub: true }
   });
-  tl.to(thresholdText, { opacity: 0, duration: 0.5 }, 0)
-    .to(threshold, { opacity: 0, duration: 0.5 }, 0.5);
+  tl.to(threshold, { opacity: 0, duration: 0.5 }, 0.5);
 });
 
 // 3. Audio Equalizer Interaction
