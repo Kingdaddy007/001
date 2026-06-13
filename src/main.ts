@@ -230,21 +230,11 @@ mm.add("(prefers-reduced-motion: no-preference)", () => {
 
     // INVERT HEADER/FOOTER COLORS: Dark text over the new bright Ivory background
     // Using fromTo guarantees it starts as Ivory regardless of scroll position on load
-    masterTl.fromTo(['.brand', '.nav-links a', '.concierge-inquiry-capsule'], 
+    masterTl.fromTo(['.brand', '.nav-links a'], 
       { color: "#F7E8CF", textShadow: "0 2px 10px rgba(26,21,18,0.3)" },
       {
         color: "#1a1512",
         textShadow: "none",
-        ease: "power3.inOut",
-        duration: 1.8
-      }, 4.6);
-    
-    // Invert CTA background/border specifically
-    masterTl.fromTo('.concierge-inquiry-capsule', 
-      { borderColor: "rgba(247, 232, 207, 0.4)", backgroundColor: "transparent" },
-      {
-        borderColor: "rgba(26, 21, 18, 0.4)",
-        backgroundColor: "transparent",
         ease: "power3.inOut",
         duration: 1.8
       }, 4.6);
