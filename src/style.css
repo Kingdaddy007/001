@@ -237,23 +237,23 @@ html.lenis { height: auto; }
   align-items: center;
   gap: 1.25rem;
   padding: 0.8rem 2.2rem;
-  border: 1px solid var(--accent-primary);
+  border: 1px solid rgba(28, 25, 22, 0.4);
   border-radius: 100px;
-  background-color: var(--accent-primary);
+  background-color: rgba(28, 25, 22, 0.05);
   cursor: pointer;
   font-family: var(--font-body);
   font-size: 0.7rem;
   letter-spacing: 0.25em;
   text-transform: uppercase;
-  color: var(--ivory-main);
+  color: var(--espresso-main);
   text-shadow: none;
   backdrop-filter: blur(var(--glass-blur));
   transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.4s ease, border-color 0.4s ease, color 0.4s ease;
 }
 .concierge-inquiry-capsule:hover {
-  background-color: var(--espresso-main) !important;
+  background-color: var(--accent-primary) !important;
   color: var(--ivory-main) !important;
-  border-color: var(--espresso-main) !important;
+  border-color: var(--accent-primary) !important;
   transform: translateY(-2px);
   text-shadow: none !important;
 }
