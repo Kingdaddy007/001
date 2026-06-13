@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Typography Playground | THRESHOLD</title>
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+    <style>
+      :root {
+        --espresso-main: #1C1916;
+        --ivory-main: #F7E8CF;
+        --accent-primary: #D97706;
+        --font-display: 'Cormorant Garamond', serif;
+        --font-body: 'Inter', sans-serif;
+      }
+
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      body {
+        background-color: var(--espresso-main);
+        color: var(--ivory-main);
+        font-family: var(--font-body);
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+        height: 100vh;
+      }
+
+      header {
+        padding: 2rem 4rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        border-bottom: 1px solid rgba(247, 232, 207, 0.1);
+      }
+
+      .logo {
+        font-family: var(--font-display);
+        font-size: 1.5rem;
+        letter-spacing: 0.15em;
+        text-transform: uppercase;
+      }
+
+      .badge {
+        font-size: 0.7rem;
+        letter-spacing: 0.25em;
+        text-transform: uppercase;
+        opacity: 0.5;
+      }
+
+      main {
+        flex: 1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 4rem;
+        position: relative;
+        perspective: 1500px; /* For 3D effects */
+      }
+
+      .quote-container {
+        max-width: 900px;
+        text-align: left;
+      }
+
+      .playground-quote {
+        font-family: var(--font-display);
+        font-size: clamp(2.5rem, 5vw, 4.5rem);
+        font-weight: 300;
+        line-height: 1.2;
+        color: var(--ivory-main);
+        margin: 0;
+      }
+
+      /* Base SplitType styles */
+      .line { overflow: hidden; padding-bottom: 10px; margin-bottom: -10px; } /* For masking stagger */
+      .word { display: inline-block; transform-style: preserve-3d; }
+      .char { display: inline-block; transform-style: preserve-3d; }
+
+      footer {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        padding: 2rem 4rem;
+        background: rgba(28, 25, 22, 0.95);
+        backdrop-filter: blur(10px);
+        border-top: 1px solid rgba(247, 232, 207, 0.1);
+        display: flex;
+        justify-content: center;
+        gap: 2rem;
+        z-index: 1000;
+      }
+
+      .toggle-btn {
+        background: transparent;
+        border: 1px solid rgba(247, 232, 207, 0.3);
+        color: var(--ivory-main);
+        padding: 1rem 2rem;
+        border-radius: 100px;
+        font-family: var(--font-body);
+        font-size: 0.75rem;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        cursor: pointer;
+        transition: all 0.3s ease;
+      }
+
+      .toggle-btn:hover {
+        border-color: var(--ivory-main);
+        background: rgba(247, 232, 207, 0.05);
+      }
+
+      .toggle-btn.active {
+        background: var(--ivory-main);
+        color: var(--espresso-main);
+        border-color: var(--ivory-main);
+      }
+
+    </style>
+  </head>
+  <body>
+    <header>
+      <div class="logo">THRESHOLD</div>
+      <div class="badge">Typography Playground</div>
+    </header>
+
+    <main>
+      <div class="quote-container">
+        <h2 class="playground-quote" id="target-text">
+          "We reject the decoration of mid-market design. Here, the raw materials are the ornament: smoked oak, travertine, and shadow."
+        </h2>
+      </div>
+    </main>
+
+    <footer>
+      <button class="toggle-btn" data-anim="stagger">Premium Stagger</button>
+      <button class="toggle-btn" data-anim="splitflap">Split-Flap Counter</button>
+      <button class="toggle-btn" data-anim="cylinder">3D Cylinder</button>
+    </footer>
+
+    <script type="module" src="/src/preview.ts"></script>
+  </body>
+</html>

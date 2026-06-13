@@ -2,6 +2,7 @@ import './style.css'
 
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
+import SplitType from 'split-type'
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -154,7 +155,7 @@ mm.add("(prefers-reduced-motion: no-preference)", () => {
     scrollTrigger: {
       trigger: '.pinned-scene-wrapper',
       start: 'top top',
-      end: '+=300%', 
+      end: '+=200%', 
       pin: true,
       scrub: 1, 
       anticipatePin: 1
@@ -172,7 +173,7 @@ mm.add("(prefers-reduced-motion: no-preference)", () => {
 
     // Fade in viewport header and footer once threshold opens
     masterTl.to(['.viewport-header', '.viewport-footer'], {
-      opacity: 1,
+      autoAlpha: 1,
       duration: 1.0,
       ease: "power2.out"
     }, 0.8);
@@ -311,16 +312,16 @@ mm.add("(prefers-reduced-motion: no-preference)", () => {
 
     // Fade out viewport UI and Atelier Panel (directly from squeezed state)
     masterTl.to(['.viewport-header', '.viewport-footer', '.atelier-panel'], {
-      opacity: 0,
+      autoAlpha: 0,
       y: -30,
       ease: "power2.inOut",
       duration: 1.0
-    }, 8.4);
+    }, 7.0);
 
     // Apply the mask to the foreground wrapper right before the transition
     masterTl.call(() => {
       actIForeground.classList.add('act-i-foreground-masked');
-    }, undefined, 8.4);
+    }, undefined, 7.0);
 
     // CURTAIN REVEAL: SVG Mask Horizontal Blinds (wiping the squeezed video)
     masterTl.to(topRects, {
@@ -334,7 +335,7 @@ mm.add("(prefers-reduced-motion: no-preference)", () => {
       stagger: { each: 0.015, from: "end" },
       ease: "power2.inOut",
       duration: 1.0
-    }, 8.4);
+    }, 7.0);
 
     masterTl.to(bottomRects, {
       attr: {
@@ -343,20 +344,20 @@ mm.add("(prefers-reduced-motion: no-preference)", () => {
       stagger: { each: 0.015, from: "end" },
       ease: "power2.inOut",
       duration: 1.0
-    }, 8.4);
+    }, 7.0);
 
     // Make the narrative bridge wrapper visible
     masterTl.to('.bridge-content', {
       opacity: 1,
       ease: "none",
       duration: 0.1
-    }, 8.4);
+    }, 7.0);
 
     // Staggered reveals for Narrative Bridge elements
     masterTl.fromTo('.bridge-number', 
       { y: 30, opacity: 0 },
       { y: 0, opacity: 1, ease: "power2.out", duration: 0.8 },
-      8.8
+      7.4
     );
 
     const bridgeHeadlineWords = document.querySelectorAll('.bridge-headline .split-word');
@@ -371,7 +372,7 @@ mm.add("(prefers-reduced-motion: no-preference)", () => {
       stagger: 0.04,
       ease: "power3.out",
       duration: 0.8
-    }, 9.0);
+    }, 7.6);
 
     const bridgeBodyWords = document.querySelectorAll('.bridge-body .split-word');
     masterTl.fromTo(bridgeBodyWords, {
@@ -380,17 +381,17 @@ mm.add("(prefers-reduced-motion: no-preference)", () => {
       filter: "blur(4px)"
     }, {
       y: 0,
-      opacity: 0.8,
+      opacity: 1,
       filter: "blur(0px)",
       stagger: 0.018,
       ease: "power3.out",
       duration: 0.8
-    }, 9.4);
+    }, 8.0);
 
     masterTl.fromTo('.bridge-scroll-indicator',
       { y: 20, opacity: 0 },
       { y: 0, opacity: 1, ease: "power2.out", duration: 1.0 },
-      10.2
+      8.8
     );
   // ==========================================
   // ACT II: THE DESCENT (Vertical Parallax)
@@ -552,9 +553,31 @@ mm.add("(prefers-reduced-motion: no-preference)", () => {
 
   const panels = gsap.utils.toArray('.storytelling-panel') as HTMLElement[];
 
+  // Split text for stagger
+  let splits: any[] = [];
+  panels.forEach(panel => {
+    // Only split the headline/quote text
+    const textTarget = panel.querySelector('.story-headline, .testimonial-quote');
+    if (textTarget) {
+      splits.push(new SplitType(textTarget as HTMLElement, { types: 'words,chars' }));
+    } else {
+      splits.push(null);
+    }
+  });
+
   // Set initial states
-  gsap.set(panels, { opacity: 0, visibility: 'hidden', y: 30 });
-  gsap.set(panels[0], { opacity: 1, visibility: 'visible', y: 0 });
+  gsap.set(panels, { opacity: 0, visibility: 'hidden' });
+  gsap.set(panels[0], { opacity: 1, visibility: 'visible' });
+  
+  // Initially, all chars are hidden except for panel 0
+  splits.forEach((split, i) => {
+    if (split) {
+      gsap.set(split.chars, { y: 20, opacity: 0 });
+      if (i === 0) {
+        gsap.set(split.chars, { y: 0, opacity: 1 });
+      }
+    }
+  });
 
   // Phase 1: The Wait (0s to 1s)
   // The frame is expanding due to the separate clipPath ScrollTrigger. 
@@ -563,14 +586,20 @@ mm.add("(prefers-reduced-motion: no-preference)", () => {
 
   // Phase 2: Slide to Image 2 & Text 2 (1s to 2s)
   storyTl.to('.editorial-carousel', { yPercent: -33.333, duration: 0.5, ease: 'power2.inOut' }, 1);
-  storyTl.to(panels[0], { opacity: 0, y: -30, duration: 0.5, ease: 'power2.inOut' }, 1);
-  storyTl.to(panels[1], { opacity: 1, y: 0, visibility: 'visible', duration: 0.5, ease: 'power2.inOut' }, 1);
+  storyTl.to(panels[0], { opacity: 0, duration: 0.5, ease: 'power2.inOut' }, 1);
+  if (splits[0]) storyTl.to(splits[0].chars, { y: -20, opacity: 0, duration: 0.5, ease: 'power2.inOut', stagger: 0.01 }, 1);
+
+  storyTl.to(panels[1], { opacity: 1, visibility: 'visible', duration: 0.5, ease: 'power2.inOut' }, 1);
+  if (splits[1]) storyTl.to(splits[1].chars, { y: 0, opacity: 1, duration: 0.5, ease: 'power2.out', stagger: 0.01 }, 1.2);
   storyTl.to({}, { duration: 0.5 }); // Hold Image 2
 
   // Phase 3: Slide to Image 3 & Text 3 (2s to 3s)
   storyTl.to('.editorial-carousel', { yPercent: -66.666, duration: 0.5, ease: 'power2.inOut' }, 2);
-  storyTl.to(panels[1], { opacity: 0, y: -30, duration: 0.5, ease: 'power2.inOut' }, 2);
-  storyTl.to(panels[2], { opacity: 1, y: 0, visibility: 'visible', duration: 0.5, ease: 'power2.inOut' }, 2);
+  storyTl.to(panels[1], { opacity: 0, duration: 0.5, ease: 'power2.inOut' }, 2);
+  if (splits[1]) storyTl.to(splits[1].chars, { y: -20, opacity: 0, duration: 0.5, ease: 'power2.inOut', stagger: 0.01 }, 2);
+
+  storyTl.to(panels[2], { opacity: 1, visibility: 'visible', duration: 0.5, ease: 'power2.inOut' }, 2);
+  if (splits[2]) storyTl.to(splits[2].chars, { y: 0, opacity: 1, duration: 0.5, ease: 'power2.out', stagger: 0.01 }, 2.2);
   storyTl.to({}, { duration: 0.5 }); // Hold Image 3
 
   // ACT IV: OUTRO RESOLUTION
@@ -602,11 +631,3 @@ mm.add("(prefers-reduced-motion: reduce)", () => {
   tl.to(threshold, { opacity: 0, duration: 0.5 }, 0.5);
 });
 
-// 3. Audio Equalizer Interaction
-const audioControl = document.querySelector('.audio-control');
-const audioEqualizer = document.querySelector('.audio-equalizer');
-if (audioControl && audioEqualizer) {
-  audioControl.addEventListener('click', () => {
-    audioEqualizer.classList.toggle('paused');
-  });
-}
