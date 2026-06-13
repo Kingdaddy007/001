@@ -103,11 +103,11 @@ html.lenis { height: auto; }
   opacity: 0;
   pointer-events: none;
   will-change: opacity;
+  transform: scaleX(-1);
 }
-.sanctuary-ambient video { width: 100%; height: 100%; object-fit: cover; }
 
 .sanctuary { position: absolute; inset: 0; z-index: 1; background-color: transparent; }
-.sanctuary-video { width: 100%; height: 100%; object-fit: cover; will-change: transform, clip-path; }
+.sanctuary-video { width: 100%; height: 100%; object-fit: cover; will-change: transform, clip-path; transform: scaleX(-1); }
 .threshold { position: absolute; inset: 0; background-color: transparent; z-index: 2; pointer-events: none; will-change: opacity; }
 
 .hero-subhead {
