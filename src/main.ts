@@ -171,11 +171,18 @@ mm.add("(prefers-reduced-motion: no-preference)", () => {
       }, 0)
       .to(threshold, { opacity: 0, ease: "power1.inOut", duration: 0.5 }, 0.8);
 
-    // Fade in viewport header and footer once threshold opens
-    masterTl.to(['.viewport-header', '.viewport-footer'], {
-      autoAlpha: 1,
-      duration: 1.0,
-      ease: "power2.out"
+    // STAGE 1: Header starts dark (CSS default --espresso-main) — visible on ivory opening.
+    // When the hero video is revealed at 0.8, transition header to ivory so it reads on dark bg.
+    masterTl.to(['.brand', '.nav-links a'], {
+      color: "#F7E8CF",
+      textShadow: "0 2px 10px rgba(26,21,18,0.3)",
+      ease: "power2.out",
+      duration: 0.8
+    }, 0.8);
+    masterTl.to('.nav-hamburger span', {
+      backgroundColor: "#F7E8CF",
+      ease: "power2.out",
+      duration: 0.8
     }, 0.8);
 
     // Staircase sequential build
@@ -209,7 +216,6 @@ mm.add("(prefers-reduced-motion: no-preference)", () => {
     }, 4.2);
 
     // Spatial Reframing: Cinematic Aspect Ratio Squeeze
-    // Physically crops the video using the exact specs from the global motion library
     masterTl.fromTo('.hero-container', 
       { clipPath: "inset(0vh 0vw 0vh 0vw round 0px)" },
       { 
@@ -222,33 +228,25 @@ mm.add("(prefers-reduced-motion: no-preference)", () => {
     masterTl.fromTo('.hero-container',
       { "--after-opacity": 0 },
       {
-        "--after-opacity": 0.3, // Subtle dimming to focus on the Atelier Panel
+        "--after-opacity": 0.3,
         ease: "power3.inOut",
         duration: 1.8
       },
       4.6
     );
 
-    // INVERT HEADER/FOOTER COLORS: Dark text over the new bright Ivory background
-    // Using fromTo guarantees it starts as Ivory regardless of scroll position on load
-    masterTl.fromTo(['.brand', '.nav-links a', '.concierge-inquiry-capsule'], 
-      { color: "#F7E8CF", textShadow: "0 2px 10px rgba(26,21,18,0.3)" },
-      {
-        color: "#1a1512",
-        textShadow: "none",
-        ease: "power3.inOut",
-        duration: 1.8
-      }, 4.6);
-    
-    // Invert CTA background/border specifically
-    masterTl.fromTo('.concierge-inquiry-capsule', 
-      { borderColor: "rgba(247, 232, 207, 0.4)", backgroundColor: "transparent" },
-      {
-        borderColor: "rgba(26, 21, 18, 0.4)",
-        backgroundColor: "transparent",
-        ease: "power3.inOut",
-        duration: 1.8
-      }, 4.6);
+    // STAGE 2: At 4.6, atelier panel (ivory bg) slides in — flip header back to dark.
+    masterTl.to(['.brand', '.nav-links a'], {
+      color: "#1a1512",
+      textShadow: "none",
+      ease: "power3.inOut",
+      duration: 1.8
+    }, 4.6);
+    masterTl.to('.nav-hamburger span', {
+      backgroundColor: "#1a1512",
+      ease: "power3.inOut",
+      duration: 1.8
+    }, 4.6);
 
     // The Atelier Panel slides perfectly into the void created by the squeeze
     masterTl.fromTo('.atelier-panel',
@@ -311,7 +309,7 @@ mm.add("(prefers-reduced-motion: no-preference)", () => {
     }, 5.8);
 
     // Fade out viewport UI and Atelier Panel (directly from squeezed state)
-    masterTl.to(['.viewport-header', '.viewport-footer', '.atelier-panel'], {
+    masterTl.to(['.viewport-header', '.atelier-panel'], {
       autoAlpha: 0,
       y: -30,
       ease: "power2.inOut",

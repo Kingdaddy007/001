@@ -6,7 +6,7 @@
   --accent-primary: #D97706;
   
   --font-display: 'Cormorant Garamond', Georgia, serif;
-  --font-body: 'Montserrat', Helvetica, sans-serif;
+  --font-body: 'Marcellus', serif;
   
   --glass-bg: rgba(9, 9, 11, 0.5);
   --glass-border: rgba(228, 228, 231, 0.1);
@@ -16,7 +16,7 @@
   --ivory-main: #F7E8CF;
   --ivory-accent: #FFF2D8;
   --espresso-main: #1C1916;
-  --espresso-secondary: #5A534C;
+  --espresso-secondary: #4A433D;
   --espresso-shadow: 0 3px 18px rgba(43, 26, 18, 0.55);
   --espresso-shadow-strong: 0 3px 18px rgba(43, 26, 18, 0.60);
 }
@@ -119,19 +119,19 @@ html.lenis { height: auto; }
   line-height: 1.6;
 }
 
-/* Viewport Header & Footer Frame */
+/* Viewport Header */
 .viewport-header {
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
-  display: flex;
-  justify-content: space-between;
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
   align-items: center;
-  padding: 2.5rem 6vw;
+  padding: 2rem 6vw;
   z-index: 100;
   pointer-events: none;
-  opacity: 0;
+  opacity: 1;
   will-change: opacity;
 }
 .viewport-header * {
@@ -142,13 +142,16 @@ html.lenis { height: auto; }
   font-family: var(--font-display); 
   font-size: 1.4rem; 
   letter-spacing: 0.1em; 
-  font-weight: 700;
+  font-weight: 500;
   color: var(--espresso-main);
   text-shadow: none;
   text-transform: uppercase;
+  text-align: center;
 }
 
-.nav-links { display: flex; gap: 3rem; }
+.nav-links { display: flex; gap: 2.5rem; align-items: center; }
+.nav-left { justify-content: flex-start; }
+.nav-right { justify-content: flex-end; }
 .nav-links a { 
   color: var(--espresso-main); 
   text-shadow: none;
@@ -161,23 +164,30 @@ html.lenis { height: auto; }
 }
 .nav-links a:hover { color: var(--accent-primary); }
 
-.viewport-footer {
-  position: fixed;
-  bottom: 2.5rem;
-  left: 0;
-  width: 100%;
+/* Hamburger Menu Button */
+.nav-hamburger {
   display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 0 6vw;
-  z-index: 100;
-  pointer-events: none;
-  opacity: 0;
-  will-change: opacity;
+  flex-direction: column;
+  justify-content: center;
+  gap: 5px;
+  width: 28px;
+  height: 28px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0;
 }
-.viewport-footer * {
-  pointer-events: auto;
+.nav-hamburger span {
+  display: block;
+  width: 100%;
+  height: 1px;
+  background-color: var(--espresso-main);
+  transition: background-color 0.4s ease;
 }
+.nav-hamburger:hover span {
+  background-color: var(--accent-primary);
+}
+
 
 /* Audio Equalizer */
 .audio-control {
@@ -355,7 +365,7 @@ html.lenis { height: auto; }
   font-family: var(--font-display);
   font-size: clamp(2.5rem, 4vw, 4rem);
   font-weight: 400;
-  color: #1a1512;
+  color: var(--espresso-main);
   text-shadow: none;
   margin-bottom: 2rem;
   line-height: 1.1;
@@ -366,7 +376,7 @@ html.lenis { height: auto; }
   font-size: 0.8rem;
   letter-spacing: 0.1em;
   text-transform: uppercase;
-  color: #2b231d;
+  color: var(--espresso-secondary);
   text-shadow: none;
   line-height: 1.8;
   margin-bottom: 1.5rem;
@@ -522,7 +532,7 @@ html.lenis { height: auto; }
   z-index: -1; 
   overflow: hidden;
   /* A beautiful, deep cinematic shade replacing the looping background video */
-  background: var(--ivory-main);
+  background: var(--espresso-main);
   will-change: clip-path;
 }
 
